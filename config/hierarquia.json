@@ -1,0 +1,17 @@
+[
+    {
+        "COD": 1,
+        "TIPO": "admin",
+        "DESCRICAO": "Usuário com privilégios aprimorados no sistema"    
+    },
+    {
+        "COD": 2,
+        "TIPO": "professor",
+        "DESCRICAO": "Gerencia reservas"
+    },
+    {
+        "COD": 3,
+        "TIPO": "agente_portaria",
+        "DESCRICAO": "Gerencia reserva para alunos"
+    }
+]
