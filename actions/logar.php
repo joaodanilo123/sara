@@ -1,35 +1,33 @@
 <?php
-header("Content-type: text/html;charset=utf-8");
 include "../config/conexao.php";
 
 $email = mysqli_escape_string($connection, $_POST['email']);
-$senha = mysqli_escape_string($connection, md5($_POST['senha']));
-$entrar = $_POST['entrar'];
+$senha = md5(mysqli_escape_string($connection, md5($_POST['senha'])));
+$submit_button = $_POST['submit_button'];
 
-if (isset($entrar)) {
+if (isset($submit_button)) {
 
     $query = "SELECT * FROM usuario WHERE user_email = '$email' AND user_senha = '$senha'";
     $result = $connection->query($query) or die($connection->error);
 
     if ($result->num_rows <= 0) {
-        echo "senha incorreta";
+        header('Location: ../login.php');
         die();
     } else {
 		$dados = $result->fetch_assoc();
 		
         if ($dados['user_inativo'] == 0) {
-            //inicia a sessão
+            
             session_start();
-            //salva os dados na sessão
             $_SESSION['email'] = $dados['user_email'];
             $_SESSION['id'] = $dados['user_id'];
             $_SESSION['nome'] = $dados['user_nome'];
 
-			//$nomecompleto = $dados['nome']." ".$dados['sobrenome'];
-			
-			switch ($dados['user_hierarquia']) {
-				case 1:
-					header("Location: ../indexadm.php");
+
+            
+			switch ($dados['hierarquia_nome']) {
+				case 'admin':
+					header('Location: ../painel/admin.php');
 					break;
 				case 2:
 					header("Location: ../indexprof.php");

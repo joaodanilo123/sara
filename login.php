@@ -29,7 +29,7 @@ session_destroy();
     <input type="email" id="email" name="email" class="form-control" placeholder="E-mail" required>
     <label for="senha" class="sr-only">Senha</label>
     <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" id="entrar" name="entrar">Acessar</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" id="entrar" name="submit_button">Acessar</button>
     <a href="#" class="btn btn-primary btn-lg btn-block" style="background-color: red; border-color: red;">Voltar</a>
   </form>
 
