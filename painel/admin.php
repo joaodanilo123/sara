@@ -9,7 +9,7 @@ if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
     include_once "../config/conexao.php";
 } else {
-    header("./login.php");
+    header("Location: ../login");
 }
 
 ?>
@@ -68,7 +68,7 @@ if (isset($_SESSION['id'])) {
                 <div class='dropdown-menu' aria-labelledby='pagesDropdown'>
                     <h6 class='dropdown-header'>Opções:</h6>
                     <a class='dropdown-item' href='listausu.php'>Listar</a>
-                    <a class='dropdown-item' href='cadastrousu.php'>Cadastrar</a>
+                    <a class='dropdown-item' href='../cadastro/usuario'>Cadastrar</a>
                 </div>
             </li>
         </ul>

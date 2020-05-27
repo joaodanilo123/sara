@@ -27,7 +27,7 @@
       </div>
         <center>
         <div class="col-md-8 order-md-1">
-          <form class="needs-validation" action="addusu.php" method="post" novalidate>
+          <form class="needs-validation" action="../actions/addusu.php" method="post" novalidate>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="nome">Nome</label>
@@ -78,15 +78,15 @@
 
             <div class="d-block my-3">
               <div class="custom-control custom-radio">
-                <input id="prof" name="tipou" type="radio" class="custom-control-input" value="1" required>
+                <input id="prof" name="tipou" type="radio" class="custom-control-input" value="professor" required>
                 <label class="custom-control-label" for="prof">Professor</label>
               </div>
               <div class="custom-control custom-radio">
-                <input id="adm" name="tipou" type="radio" class="custom-control-input" value="2" required>
+                <input id="adm" name="tipou" type="radio" class="custom-control-input" value="admin" required>
                 <label class="custom-control-label" for="adm">Administrador</label>
               </div>
               <div class="custom-control custom-radio">
-                <input id="ap" name="tipou" type="radio" class="custom-control-input" value="3" required>
+                <input id="ap" name="tipou" type="radio" class="custom-control-input" value="agente" required>
                 <label class="custom-control-label" for="ap">Agente de Portaria</label>
               </div>
             </div>
