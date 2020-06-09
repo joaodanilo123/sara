@@ -1,15 +1,15 @@
 <?php
   header('Content-Type: text/html; charset=UTF-8');
   //a sessão precisa ser iniciada em cada página
-  if (!isset($_SESSION)) {session_start();}
+  /*if (!isset($_SESSION)) {session_start();}
   if (isset($_SESSION['login'])) {
-    $id_user_session = $_SESSION['id'];
+   $id_user_session = $_SESSION['id'];
   }
 
   $idambiente = $_GET['id'];
 
   $dbc = mysqli_connect('localhost', 'root', '', 'sara') or die ('Erro ao conectar ao servidor MySQL');
-  //$dbc = mysqli_connect('localhost', 'lucas_arcari', '967955', 'lucas_arcari') or die ('Erro ao conectar ao Banco de Dados');
+  $dbc = mysqli_connect('localhost', 'lucas_arcari', '967955', 'lucas_arcari') or die ('Erro ao conectar ao Banco de Dados');
   mysqli_set_charset($dbc,"utf8"); 
   $query_events = "SELECT * FROM reservar WHERE id_ambi = '$idambiente'";
   $result_events = mysqli_query($dbc, $query_events) or die ('Erro ao executar o comando SQL event');
@@ -20,7 +20,7 @@
 
   $query2 = "SELECT * FROM usuarios WHERE id_usua = '$id_user_session'";
   $result2 = mysqli_query($dbc, $query2) or die ('Erro ao executar o comando SQL');
-  $row2 = mysqli_fetch_assoc($result2);
+  $row2 = mysqli_fetch_assoc($result2);*/
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -28,35 +28,35 @@
     <title>Reservar</title>
 
     <meta charset='utf-8' />
-    <link href='modal/css/fullcalendar.min.css' rel='stylesheet' />
-    <link href='modal/css/personalizado.min.css' rel='stylesheet' />
-    <link href='modal/css/bootstrap.min.css' rel='stylesheet' />
-    <link href='packages/core/main.css' rel='stylesheet' />
-    <link href='packages/daygrid/main.css' rel='stylesheet' />  
-    <link href='packages/timegrid/main.css' rel='stylesheet' />
-    <link href='packages/list/main.css' rel='stylesheet' />
+    <link href='./dependencias/modal/css/fullcalendar.min.css' rel='stylesheet' />
+    <link href='./dependencias/modal/css/personalizado.min.css' rel='stylesheet' />
+    <link href='./dependencias/modal/css/bootstrap.min.css' rel='stylesheet' />
+    <link href='./dependencias/packages/core/main.css' rel='stylesheet' />
+    <link href='./dependencias/packages/daygrid/main.css' rel='stylesheet' />  
+    <link href='./dependencias/packages/timegrid/main.css' rel='stylesheet' />
+    <link href='./dependencias/packages/list/main.css' rel='stylesheet' />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="./dependencias/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <!-- Page level plugin CSS-->
-    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="./dependencias/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link rel="stylesheet" href="setidioma.php">
 
-    <script src='modal/js/jquery.min.js'></script>
-    <script src='modal/js/bootstrap.min.js'></script>
-    <script src='modal/js/jquery-ui.min.js'></script>
-    <script src='modal/js/moment.min.js'></script>
-    <script src='modal/js/fullcalendar.min.js'></script>
-    <script src='packages/core/main.js'></script>
-    <script src='packages/interaction/main.js'></script>
-    <script src='packages/daygrid/main.js'></script>
-    <script src='packages/timegrid/main.js'></script>
-    <script src='packages/list/main.js'></script>
-    <script src='locales/pt-br.js'></script>
-    <script src="bootbox/bootbox.js"></script>
+    <script src='./dependencias/modal/js/jquery.min.js'></script>
+    <script src='./dependencias/modal/js/bootstrap.min.js'></script>
+    <script src='./dependencias/modal/js/jquery-ui.min.js'></script>
+    <script src='./dependencias/modal/js/moment.min.js'></script>
+    <script src='./dependencias/modal/js/fullcalendar.min.js'></script>
+    <script src='./dependencias/packages/core/main.js'></script>
+    <script src='./dependencias/packages/interaction/main.js'></script>
+    <script src='./dependencias/packages/daygrid/main.js'></script>
+    <script src='./dependencias/packages/timegrid/main.js'></script>
+    <script src='./dependencias/packages/list/main.js'></script>
+    <script src='./dependencias/locales/pt-br.js'></script>
+    <script src="./dependencias/bootbox/bootbox.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
 
@@ -123,7 +123,7 @@
           },*/
 
           events: [
-            <?php                
+            <?php $a;/*                
               while ($row_events = mysqli_fetch_assoc($result_events)) {
                 $idUsuario = $row_events['id_rese'];
                 $sol = $row_events['reservista'];
@@ -140,10 +140,8 @@
                 end: '<?php echo $row_events['end']; ?>',
                 color: '<?php echo $row_events['color']; ?>',
                 },
-                
-                <?php  
               }
-            ?>
+            */?>
           ]
 
         });
@@ -185,7 +183,7 @@
     </div>
 
     <nav style="margin-left: 12px; max-height: 100px; margin-top: -10px;" class="navbar navbar-expand-lg navbar-light bg-light">
-      <?php
+      <?php $a;/*
       echo "<h1 style'font-size: 100px;'>". $row['nome'] ." - ". $row['numero'] ."</h1>";
 
       if ($row2['id_tipo_usua'] == 1) {
@@ -209,7 +207,7 @@
             break;
           }
         }
-      }
+      }*/
       ?>
     </nav>
 

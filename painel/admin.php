@@ -9,7 +9,7 @@ if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
     include_once "../config/conexao.php";
 } else {
-    header("./login.php");
+    header("Location: ../login");
 }
 
 ?>
@@ -31,16 +31,29 @@ if (isset($_SESSION['id'])) {
 
     <!-- Custom styles for this template-->
     <link href="../dependencias/css/sb-admin.css" rel="stylesheet">
+    <style>
+        .opcao {
+            text-decoration: none;
+            transition-property: all;
+            transition-duration: 0.2s;
+        }
+
+        .opcao:hover {
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body id="page-top">
     <nav class='navbar navbar-expand navbar-dark bg-dark static-top'>
 
-        <a class='navbar-brand mr-1' href='./admin.php'>🔓 <?= $nome ?></a>
+        <a class='navbar-brand mr-1' href='./admin'>🔓 <?= $nome ?></a>
 
         <ul class='navbar-nav ml-auto ml-md-0'>
             <li class='nav-item dropdown no-arrow'>
-                <a href='../actions/logout.php'><button type='button' class='btn btn-outline-light'>Logout</button></a>
+                <a href='../actions/logout'><button type='button' class='btn btn-outline-light'>Logout</button></a>
                 </div>
             </li>
         </ul>
@@ -55,9 +68,7 @@ if (isset($_SESSION['id'])) {
                     <span>Ambientes</span>
                 </a>
                 <div class='dropdown-menu' aria-labelledby='pagesDropdown'>
-                    <h6 class='dropdown-header'>Opções:</h6>
-                    <a class='dropdown-item' href='indexadm.php'>Listar</a>
-                    <a class='dropdown-item' href='../cadastro/ambiente.php'>Cadastrar</a>
+                    <a class='dropdown-item' href='../cadastro/ambiente'>Cadastrar</a>
                 </div>
             </li>
             <li class='nav-item dropdown'>
@@ -67,8 +78,8 @@ if (isset($_SESSION['id'])) {
                 </a>
                 <div class='dropdown-menu' aria-labelledby='pagesDropdown'>
                     <h6 class='dropdown-header'>Opções:</h6>
-                    <a class='dropdown-item' href='listausu.php'>Listar</a>
-                    <a class='dropdown-item' href='cadastrousu.php'>Cadastrar</a>
+                    <a class='dropdown-item' href='listausu'>Listar</a>
+                    <a class='dropdown-item' href='../cadastro/usuario'>Cadastrar</a>
                 </div>
             </li>
         </ul>
@@ -82,24 +93,27 @@ if (isset($_SESSION['id'])) {
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <tr>
-                                    <td><b>ID</b></td>
+                                    <td style="width: 1%;"><b>ID</b></td>
                                     <td><b>Nome</b></td>
                                     <td><b>Número</b></td>
-                                    <td><b>Opções</b></td>
+                                    <td style="width: 10%;"><b>Opções</b></td>
                                 </tr>
 
                                 <?php
 
                                 $sql = 'SELECT ambiente_id, ambiente_nome, ambiente_numero FROM ambiente';
                                 $result = $connection->query($sql);
-
                                 while ($row = $result->fetch_assoc()) :
                                 ?>
                                     <tr>
-                                        <td><?=$row['ambiente_id']?></td>
-                                        <td><?=$row['ambiente_nome']?></td>
-                                        <td><?=$row['ambiente_numero']?></td>
-                                        <td>deletar</td>
+                                        <td><?= $row['ambiente_id'] ?></td>
+                                        <td><?= $row['ambiente_nome'] ?></td>
+                                        <td style="text-align:center"><?= $row['ambiente_numero'] ?></td>
+                                        <td style="text-align:center">
+                                            <a href="" class="opcao">🗑️</a>
+                                            <a href="" class="opcao">✏️</a>
+                                            <a href="" class="opcao">🔍</a>
+                                        </td>
                                     </tr>
                                 <?php endwhile; ?>
                             </table>

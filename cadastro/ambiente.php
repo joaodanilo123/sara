@@ -29,7 +29,7 @@ $connection->close();
             <img class="d-block mx-auto mb-4" src="../assets/SARA.png" style="border-radius: 20px;" alt="" width="72" height="72">
             <h2>Cadastre um Ambiente</h2>
         </div>
-        <div class="col-md-8 order-md-1">
+        <div class="col-md-7 order-md-1">
             <form class="needs-validation" action="../actions/addambi.php" method="post" novalidate>
                 <div class="row">
                     <div class="col-md-6 mb-3">
@@ -42,9 +42,6 @@ $connection->close();
                     <div class="col-md-6 mb-3">
                         <label for="numero">Número</label>
                         <input type="number" class="form-control" name="numero" placeholder="" required>
-                        <div class="invalid-feedback">
-                            Informação inválida.
-                        </div>
                     </div>
                 </div>
 
@@ -62,7 +59,7 @@ $connection->close();
 
                 <hr class="mb-4">
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Cadastrar</button>
-                <a href="../painel/admin.php" class="btn btn-primary btn-lg btn-block" style="background-color: red; border-color: red;">Voltar</a>
+                <a href="../painel/admin" class="btn btn-primary btn-lg btn-block" style="background-color: red; border-color: red;">Voltar</a>
             </form>
         </div>
     </div>

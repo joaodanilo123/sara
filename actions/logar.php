@@ -2,7 +2,7 @@
 include "../config/conexao.php";
 
 $email = mysqli_escape_string($connection, $_POST['email']);
-$senha = md5(mysqli_escape_string($connection, md5($_POST['senha'])));
+$senha = md5(mysqli_escape_string($connection, $_POST['senha']));
 $submit_button = $_POST['submit_button'];
 
 if (isset($submit_button)) {
@@ -11,9 +11,12 @@ if (isset($submit_button)) {
     $result = $connection->query($query) or die($connection->error);
 
     if ($result->num_rows <= 0) {
-        header('Location: ../login.php');
-        die();
-    } else {
+        header('Location: ../login.php');;
+        die("erro");
+    } 
+    
+    
+    else {
 		$dados = $result->fetch_assoc();
 		
         if ($dados['user_inativo'] == 0) {
@@ -27,16 +30,16 @@ if (isset($submit_button)) {
             
 			switch ($dados['hierarquia_nome']) {
 				case 'admin':
-					header('Location: ../painel/admin.php');
+					header('Location: http://sara.net/painel/admin');
 					break;
-				case 2:
-					header("Location: ../indexprof.php");
+				case 'professor':
+                    header('Location: http://sara.net/painel/professor');
 					break;
 				case 3:
 					header("Location: ../indexap.php");
 					break;
 				default:
-					header("../login.php?erro=hierarquia_invalida");
+				    header("../login.php?erro=hierarquia_invalida");
 			}
 
         } else {
