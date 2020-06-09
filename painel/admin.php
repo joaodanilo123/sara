@@ -78,7 +78,11 @@ if (isset($_SESSION['id'])) {
                 </a>
                 <div class='dropdown-menu' aria-labelledby='pagesDropdown'>
                     <h6 class='dropdown-header'>Opções:</h6>
+<<<<<<< HEAD
                     <a class='dropdown-item' href='listausu'>Listar</a>
+=======
+                    <a class='dropdown-item' href='listausu.php'>Listar</a>
+>>>>>>> dadda1c275fec1bdfeba43b6827782c4f6bb724b
                     <a class='dropdown-item' href='../cadastro/usuario'>Cadastrar</a>
                 </div>
             </li>
