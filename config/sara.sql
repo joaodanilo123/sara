@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10-Jun-2020 às 00:58
+-- Tempo de geração: 10-Jun-2020 às 03:06
 -- Versão do servidor: 10.4.11-MariaDB
 -- versão do PHP: 7.4.6
 
@@ -26,24 +26,40 @@ SET time_zone = "+00:00";
 --
 -- Estrutura da tabela `ambiente`
 --
--- Erro ao ler a estrutura para a tabela sara.ambiente: #1932 - Table 'sara.ambiente' doesn't exist in engine
--- Erro ao ler dados para tabela sara.ambiente: #1064 - Você tem um erro de sintaxe no seu SQL próximo a 'FROM `sara`.`ambiente`' na linha 1
+
+CREATE TABLE `ambiente` (
+  `ambiente_id` char(13) NOT NULL,
+  `ambiente_nome` varchar(50) NOT NULL,
+  `ambiente_numero` varchar(4) NOT NULL,
+  `tipo_ambiente_id` char(13) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `hierarquia`
 --
--- Erro ao ler a estrutura para a tabela sara.hierarquia: #1932 - Table 'sara.hierarquia' doesn't exist in engine
--- Erro ao ler dados para tabela sara.hierarquia: #1064 - Você tem um erro de sintaxe no seu SQL próximo a 'FROM `sara`.`hierarquia`' na linha 1
+
+CREATE TABLE `hierarquia` (
+  `hierarquia_nome` varchar(20) NOT NULL,
+  `hierarquia_descricao` tinytext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `reserva`
 --
--- Erro ao ler a estrutura para a tabela sara.reserva: #1932 - Table 'sara.reserva' doesn't exist in engine
--- Erro ao ler dados para tabela sara.reserva: #1064 - Você tem um erro de sintaxe no seu SQL próximo a 'FROM `sara`.`reserva`' na linha 1
+
+CREATE TABLE `reserva` (
+  `reserva_id` char(13) NOT NULL,
+  `ambiente_id` char(13) NOT NULL,
+  `usuario_id` char(13) NOT NULL,
+  `reserva_inicio` datetime NOT NULL,
+  `reserva_fim` datetime NOT NULL,
+  `reserva_cor` varchar(10) NOT NULL,
+  `reserva_repeticoes` smallint(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -52,26 +68,85 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tipo_ambiente` (
-  `tipo_ambiente_id` char(13) NOT NULL,
+  `tipo` char(13) NOT NULL,
   `tipo_ambiente_nome` varchar(50) NOT NULL,
-  `tipo_ambiente_descricao` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `tipo_ambiente`
---
-
-INSERT INTO `tipo_ambiente` (`tipo_ambiente_id`, `tipo_ambiente_nome`, `tipo_ambiente_descricao`) VALUES
-('tipoambient', 'Sala de aula', 'Sala de aula porque sim'),
-('98765432100', 'Laboratório de Informática', 'Sala com computadores para uso em atividades acadêmicas ');
+  `tipo_ambiente_descricao` tinytext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `usuario`
 --
--- Erro ao ler a estrutura para a tabela sara.usuario: #1932 - Table 'sara.usuario' doesn't exist in engine
--- Erro ao ler dados para tabela sara.usuario: #1064 - Você tem um erro de sintaxe no seu SQL próximo a 'FROM `sara`.`usuario`' na linha 1
+
+CREATE TABLE `usuario` (
+  `usuario_id` char(13) NOT NULL,
+  `usuario_nome` varchar(50) NOT NULL,
+  `usuario_email` varchar(50) NOT NULL,
+  `usuario_senha` char(32) NOT NULL,
+  `hierarquia_nome` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices para tabela `ambiente`
+--
+ALTER TABLE `ambiente`
+  ADD PRIMARY KEY (`ambiente_id`),
+  ADD KEY `tipo_ambi_fk` (`tipo_ambiente_id`);
+
+--
+-- Índices para tabela `hierarquia`
+--
+ALTER TABLE `hierarquia`
+  ADD PRIMARY KEY (`hierarquia_nome`);
+
+--
+-- Índices para tabela `reserva`
+--
+ALTER TABLE `reserva`
+  ADD PRIMARY KEY (`reserva_id`),
+  ADD KEY `ambiente_fk` (`ambiente_id`),
+  ADD KEY `usuario_fk` (`usuario_id`);
+
+--
+-- Índices para tabela `tipo_ambiente`
+--
+ALTER TABLE `tipo_ambiente`
+  ADD PRIMARY KEY (`tipo`);
+
+--
+-- Índices para tabela `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`usuario_id`),
+  ADD KEY `hierarquia_fk` (`hierarquia_nome`);
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `ambiente`
+--
+ALTER TABLE `ambiente`
+  ADD CONSTRAINT `tipo_ambi_fk` FOREIGN KEY (`tipo_ambiente_id`) REFERENCES `tipo_ambiente` (`tipo`);
+
+--
+-- Limitadores para a tabela `reserva`
+--
+ALTER TABLE `reserva`
+  ADD CONSTRAINT `ambiente_fk` FOREIGN KEY (`ambiente_id`) REFERENCES `ambiente` (`ambiente_id`),
+  ADD CONSTRAINT `usuario_fk` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`);
+
+--
+-- Limitadores para a tabela `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `hierarquia_fk` FOREIGN KEY (`hierarquia_nome`) REFERENCES `hierarquia` (`hierarquia_nome`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
