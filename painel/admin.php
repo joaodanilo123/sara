@@ -49,11 +49,11 @@ if (isset($_SESSION['id'])) {
 <body id="page-top">
     <nav class='navbar navbar-expand navbar-dark bg-dark static-top'>
 
-        <a class='navbar-brand mr-1' href='./admin'>🔓 <?= $nome ?></a>
+        <span class='navbar-brand mr-1' href='./admin.php'>🔓 <?= $nome ?></span>
 
         <ul class='navbar-nav ml-auto ml-md-0'>
             <li class='nav-item dropdown no-arrow'>
-                <a href='../actions/logout'><button type='button' class='btn btn-outline-light'>Logout</button></a>
+                <a href='../actions/logout.php'><button type='button' class='btn btn-outline-light'>Logout</button></a>
                 </div>
             </li>
         </ul>
@@ -68,7 +68,8 @@ if (isset($_SESSION['id'])) {
                     <span>Ambientes</span>
                 </a>
                 <div class='dropdown-menu' aria-labelledby='pagesDropdown'>
-                    <a class='dropdown-item' href='../cadastro/ambiente'>Cadastrar</a>
+                <a class='dropdown-item' onclick="loadEnvs()">Listar</a>
+                    <a class='dropdown-item' href='../cadastro/ambiente.php'>Cadastrar</a>
                 </div>
             </li>
             <li class='nav-item dropdown'>
@@ -78,8 +79,8 @@ if (isset($_SESSION['id'])) {
                 </a>
                 <div class='dropdown-menu' aria-labelledby='pagesDropdown'>
                     <h6 class='dropdown-header'>Opções:</h6>
-                    <a class='dropdown-item' href='listausu.php'>Listar</a>
-                    <a class='dropdown-item' href='../cadastro/usuario'>Cadastrar</a>
+                    <a class='dropdown-item' onclick="loadUsers()">Listar</a>
+                    <a class='dropdown-item' href='../cadastro/usuario.php'>Cadastrar</a>
                 </div>
             </li>
         </ul>
@@ -88,36 +89,8 @@ if (isset($_SESSION['id'])) {
 
             <div class='container-fluid'>
                 <div class="card mb-3">
-                    <div class="card-header"> <i class="fas">🚪</i>Ambientes</div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <tr>
-                                    <td style="width: 1%;"><b>ID</b></td>
-                                    <td><b>Nome</b></td>
-                                    <td><b>Número</b></td>
-                                    <td style="width: 10%;"><b>Opções</b></td>
-                                </tr>
-
-                                <?php
-
-                                $sql = 'SELECT ambiente_id, ambiente_nome, ambiente_numero FROM ambiente';
-                                $result = $connection->query($sql);
-                                while ($row = $result->fetch_assoc()) :
-                                ?>
-                                    <tr>
-                                        <td><?= $row['ambiente_id'] ?></td>
-                                        <td><?= $row['ambiente_nome'] ?></td>
-                                        <td style="text-align:center"><?= $row['ambiente_numero'] ?></td>
-                                        <td style="text-align:center">
-                                            <a href="" class="opcao">🗑️</a>
-                                            <a href="" class="opcao">✏️</a>
-                                            <a href="" class="opcao">🔍</a>
-                                        </td>
-                                    </tr>
-                                <?php endwhile; ?>
-                            </table>
-                        </div>
+                    <div class="card-header" id="content-name"></div>
+                    <div class="card-body" id="indextable">
                     </div>
                 </div>
             </div>
@@ -135,6 +108,33 @@ if (isset($_SESSION['id'])) {
             <script src='../dependencias/js/sb-admin.min.js'></script>
             <script src='../dependencias/js/demo/datatables-demo.js'></script>
             <script src='../dependencias/js/demo/chart-area-demo.js'></script>
+            <script>
+                function loadUsers(){
+                    let req = new XMLHttpRequest();
+                    req.onreadystatechange = function(){
+                        if(this.status == 200 && this.readyState == 4){
+                            document.getElementById('indextable').innerHTML = req.responseText;
+                            document.getElementById('content-name').innerText = '👥 Usuários';
+                        }
+                    }
+
+                    req.open('GET', '../actions/listar_usuarios.php', true);
+                    req.send();
+                }
+
+                function loadEnvs(){
+                    let req = new XMLHttpRequest();
+                    req.onreadystatechange = function(){
+                        if(this.status == 200 && this.readyState == 4){
+                            document.getElementById('indextable').innerHTML = req.responseText;
+                            document.getElementById('content-name').innerText = '🚪 Ambientes';
+                        }
+                    }
+
+                    req.open('GET', '../actions/listar_ambientes.php', true);
+                    req.send();
+                }
+            </script>
 </body>
 
 </html>
