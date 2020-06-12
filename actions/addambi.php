@@ -1,6 +1,8 @@
 <?php
 	include '../config/conexao.php';
 
+	print_r($_POST);
+
 	$nome = $_POST['nome'];
 	$numero = $_POST['numero'];
 	$tipo_ambiente_id = $_POST['tipoa'];
@@ -9,8 +11,7 @@
 	$connection->query($query) or die($connection->error);
 	
 	if (!$connection->error) {
-		header('Location: ../cadastro/ambiente?erro=no');
+		header('Location: ../cadastro/ambiente.php?erro=no');
 	} else {
-		header('Location: ../cadastro/ambiente?erro=erro');
+		header('Location: ../cadastro/ambiente.php?erro=erro');
 	}
-	//header("Location: ../cadastro/ambiente.php");

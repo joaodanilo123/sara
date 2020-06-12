@@ -50,7 +50,7 @@ $connection->close();
                 <div class="d-block my-3">
                 <?php foreach($tipos_ambiente as $tipo):?>
                     <div class="custom-control custom-radio">
-                        <input id="audi" name="tipoa" type="radio" class="custom-control-input" value="<?=$tipo["tipo_ambiente_id"]?>" required>
+                        <input id="audi" name="tipoa" type="radio" class="custom-control-input" value="<?=$tipo['tipo']?>" required>
                         <label class="custom-control-label" for="audi"><?=$tipo["tipo_ambiente_nome"]?></label>
                     </div>
                 <?php endforeach; ?>
@@ -59,7 +59,7 @@ $connection->close();
 
                 <hr class="mb-4">
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Cadastrar</button>
-                <a href="../painel/admin" class="btn btn-primary btn-lg btn-block" style="background-color: red; border-color: red;">Voltar</a>
+                <a href="../painel/admin.php" class="btn btn-primary btn-lg btn-block" style="background-color: red; border-color: red;">Voltar</a>
             </form>
         </div>
     </div>
