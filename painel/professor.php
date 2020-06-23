@@ -96,16 +96,16 @@
             Escolha um Ambiente</div>
           <div class='card-body'>
             <div class='table-responsive'>
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">';
-                <thead>';
-                  <tr>';
-                    <th>Tipo</th>';
-                    <th>Nome</th>';
-                    <th>Número</th>';
-                    <th>Opções</th>';
-                  </tr>';
-                </thead>';
-                <tfoot>';
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Tipo</th>
+                    <th>Nome</th>
+                    <th>Número</th>
+                    <th>Opções</th>
+                  </tr>
+                </thead>
+                <tfoot>
                   <?php
                   /* while ($row = mysqli_fetch_assoc($result)) { 
                               // Display the score data
@@ -121,11 +121,11 @@
                                     }
                                   }
                                 }?>
-                                 <th>' . $row['nome'] . '</th>';
-                                 <th>' . $row['numero'] . '</th>';
-                                 <th><a href="index.php?id='. $row['id_ambi'] .'">📆</a></th></tr>';
+                                 <th>' . $row['nome'] . '</th>
+                                 <th>' . $row['numero'] . '</th>
+                                 <th><a href="index.php?id='. $row['id_ambi'] .'">📆</a></th></tr>
                               }elseif ($row['inativo'] == 1) {
-                                 <tr>';
+                                 <tr>
                                 //Identifica Tipo de Usuário
                                 if(!!$resultado){
                                   foreach($resultado as $item){
@@ -135,9 +135,9 @@
                                     }
                                   }
                                 }
-                                 <th style="color: red;">' . $row['nome'] . '</th>';
-                                 <th style="color: red;">' . $row['numero'] . '</th>';
-                                 <th style="color: red;"><label>INATIVADO</label></th></tr>';
+                                 <th style="color: red;">' . $row['nome'] . '</th>
+                                 <th style="color: red;">' . $row['numero'] . '</th>
+                                 <th style="color: red;"><label>INATIVADO</label></th></tr>
                               }  
                             }
                           */ ?>

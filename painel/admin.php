@@ -9,7 +9,7 @@ if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
     include_once "../config/conexao.php";
 } else {
-    header("Location: ../login");
+    header("Location: ../login.php");
 }
 
 ?>
@@ -43,6 +43,19 @@ if (isset($_SESSION['id'])) {
             font-size: 1.2rem;
             text-decoration: none;
         }
+
+        figure {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            flex-wrap: wrap;
+        }
+
+        figure img {
+            max-height: 300px;
+            max-width: 300px;
+        }
     </style>
 </head>
 
@@ -68,7 +81,7 @@ if (isset($_SESSION['id'])) {
                     <span>Ambientes</span>
                 </a>
                 <div class='dropdown-menu' aria-labelledby='pagesDropdown'>
-                <a class='dropdown-item' onclick="loadEnvs()">Listar</a>
+                    <a class='dropdown-item' onclick="loadEnvs()">Listar</a>
                     <a class='dropdown-item' href='../cadastro/ambiente.php'>Cadastrar</a>
                 </div>
             </li>
@@ -89,7 +102,12 @@ if (isset($_SESSION['id'])) {
 
             <div class='container-fluid'>
                 <div class="card mb-3">
-                    <div class="card-header" id="content-name"></div>
+                    <div class="card-header" id="content-name">
+                        <figure>
+                            <img src="../assets/SARA.png" alt="logotipo sara">
+                            <figcaption><b>Selecione uma opção ao lado</b></figcaption>
+                        </figure>
+                    </div>
                     <div class="card-body" id="indextable">
                     </div>
                 </div>
@@ -98,43 +116,53 @@ if (isset($_SESSION['id'])) {
             <a class='scroll-to-top rounded' href='#page-top'>
                 <i class='fas fa-angle-up'></i>
             </a>
-
-            <script src='../dependencias/vendor/jquery/jquery.min.js'></script>
-            <script src='../dependencias/vendor/bootstrap/js/bootstrap.bundle.min.js'></script>
-            <script src='../dependencias/vendor/jquery-easing/jquery.easing.min.js'></script>
-            <script src='../dependencias/vendor/chart.js/Chart.min.js'></script>
-            <script src='../dependencias/vendor/datatables/jquery.dataTables.js'></script>
-            <script src='../dependencias/vendor/datatables/dataTables.bootstrap4.js'></script>
-            <script src='../dependencias/js/sb-admin.min.js'></script>
-            <script src='../dependencias/js/demo/datatables-demo.js'></script>
-            <script src='../dependencias/js/demo/chart-area-demo.js'></script>
-            <script>
-                function loadUsers(){
-                    let req = new XMLHttpRequest();
-                    req.onreadystatechange = function(){
-                        if(this.status == 200 && this.readyState == 4){
-                            document.getElementById('indextable').innerHTML = req.responseText;
-                            document.getElementById('content-name').innerText = '👥 Usuários';
-                        }
-                    }
-
-                    req.open('GET', '../actions/listar_usuarios.php', true);
-                    req.send();
+        </div>
+    </div>
+    <script src='../dependencias/vendor/jquery/jquery.min.js'></script>
+    <script src='../dependencias/vendor/bootstrap/js/bootstrap.bundle.min.js'></script>
+    <script src='../dependencias/vendor/jquery-easing/jquery.easing.min.js'></script>
+    <script src='../dependencias/vendor/chart.js/Chart.min.js'></script>
+    <script src='../dependencias/vendor/datatables/jquery.dataTables.js'></script>
+    <script src='../dependencias/vendor/datatables/dataTables.bootstrap4.js'></script>
+    <script src='../dependencias/js/sb-admin.min.js'></script>
+    <script src='../dependencias/js/demo/datatables-demo.js'></script>
+    <script src='../dependencias/js/demo/chart-area-demo.js'></script>
+    <script>
+        function loadUsers() {
+            let req = new XMLHttpRequest();
+            req.onreadystatechange = function() {
+                if (this.status == 200 && this.readyState == 4) {
+                    document.getElementById('indextable').innerHTML = req.responseText;
+                    document.getElementById('content-name').innerText = '👥 Usuários';
                 }
+            }
 
-                function loadEnvs(){
-                    let req = new XMLHttpRequest();
-                    req.onreadystatechange = function(){
-                        if(this.status == 200 && this.readyState == 4){
-                            document.getElementById('indextable').innerHTML = req.responseText;
-                            document.getElementById('content-name').innerText = '🚪 Ambientes';
-                        }
-                    }
+            req.open('GET', '../actions/listar_usuarios.php', true);
+            req.send();
+        }
 
-                    req.open('GET', '../actions/listar_ambientes.php', true);
-                    req.send();
+        function loadEnvs() {
+            let req = new XMLHttpRequest();
+            req.onreadystatechange = function() {
+                if (this.status == 200 && this.readyState == 4) {
+                    document.getElementById('indextable').innerHTML = req.responseText;
+                    document.getElementById('content-name').innerText = '🚪 Ambientes';
                 }
-            </script>
+            }
+
+            req.open('GET', '../actions/listar_ambientes.php', true);
+            req.send();
+        }
+
+        function delAmbiente() {
+            let req = new XMLHttpRequest();
+            req.onreadystatechange = loadEnvs
+
+
+            req.open('GET', '../actions/listar_ambientes.php', true);
+            req.send();
+        }
+    </script>
 </body>
 
 </html>
