@@ -44,6 +44,11 @@ $pd = carregar_profs($connection);
             border-radius: 5px;
             padding: 40px;
         }
+    
+        .borded-strong {
+            border: 3px solid black
+        }
+    
     </style>
     <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/core/main.min.css">
     <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/daygrid/main.min.css">
@@ -62,7 +67,8 @@ $pd = carregar_profs($connection);
                 minTime: "07:45:00",
                 maxTime: "22:30:00",
                 slotDuration: '00:20:00',
-                events: '../actions/listar_reservas.php'
+                events: '../actions/listar_reservas.php',
+                height: 500
             });
 
             calendar.render();
@@ -120,7 +126,7 @@ $pd = carregar_profs($connection);
                 </select>
             </fieldset>
             <br>
-            <div id="calendar"></div>
+            <div id="calendar" class="borded-strong"></div>
             <br>
             <input type="submit" value="Reservar" class="col btn btn-primary">
         </form>

@@ -8,7 +8,7 @@ $amb = $_POST['ambiente'];
 $agente = $_SESSION['id'];
 $i = $_POST['inicio'];
 $f = $_POST['fim'];
-$cor = $_POST['cor'];
+$cor = $_POST['color'];
 
 
 $sql = "INSERT INTO reserva(reserva_id, ambiente_id, reservista_id, agente_id, reserva_inicio, reserva_fim, reserva_cor) VALUES
@@ -17,8 +17,14 @@ $sql = "INSERT INTO reserva(reserva_id, ambiente_id, reservista_id, agente_id, r
         '$amb',
         '$prof',
         '$agente',
+        '$i',
+        '$f',
+        '$cor'
     )
 ";
 
-var_dump($_POST);
-var_dump($_SESSION['id']);
+if($connection->query($sql)){
+    header('Location: ../painel/agente.php');
+} else {
+    echo $connection->error;
+};
