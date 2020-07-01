@@ -47,7 +47,7 @@
 
     <hr class="mb-4">
     
-    <a href="listausu.php" class="btn btn-danger btn-lg btn-block">Voltar</a>
+    <a href="../painel/admin.php" class="btn btn-danger btn-lg btn-block">Voltar</a>
 
   </section>
 

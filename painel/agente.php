@@ -62,7 +62,7 @@ if (!isset($_SESSION['id'])) {
   <div id="wrapper">
     <ul class=' sidebar navbar-nav'>
       <li class='nav-item'>
-        <a class='nav-link' href='indexap.php'>
+        <a class='nav-link' href='../cadastro/reserva.php'>
           <i class='fas fa-fw'>📁</i>
           <span>Reservar Ambientes</span></a>
       </li>
