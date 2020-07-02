@@ -17,6 +17,13 @@ if (!isset($_SESSION['id'])) {
 
   <title>Menu Principal - Agente de Portaria</title>
 
+  <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/core/main.min.css">
+  <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/daygrid/main.min.css">
+  <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/timegrid/main.min.css">
+  <script src="../dependencias/fullcalendar-4.1.0/packages/core/main.min.js"></script>
+  <script src="../dependencias/fullcalendar-4.1.0/packages/daygrid/main.min.js"></script>
+  <script src="../dependencias/fullcalendar-4.1.0/packages/timegrid/main.min.js"></script>
+  <script src="../dependencias/fullcalendar-4.1.0/packages/core/locales/pt-br.js"></script>
   <!-- Custom fonts for this template-->
   <link href="../dependencias/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
@@ -68,7 +75,7 @@ if (!isset($_SESSION['id'])) {
       </li>
 
       <li class='nav-item'>
-        <a class='nav-link' href='mrap.php'>
+        <a class='nav-link' href='#' onclick="loadUserReservas()">
           <i class='fas fa-fw'>🗂️</i>
           <span>Minhas Reservas</span></a>
       </li>
@@ -136,6 +143,22 @@ if (!isset($_SESSION['id'])) {
         console.log(response)
       }
 
+    }
+
+    async function loadUserReservas() {
+      document.getElementById('content-name').innerText = 'Reservas feitas por você';
+      var calendarEl = document.getElementById('indextable');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'pt-br',
+        plugins: ['timeGrid'],
+        defaultView: 'timeGridWeek',
+        minTime: "07:45:00",
+        maxTime: "22:30:00",
+        slotDuration: '00:20:00',
+        events: '../actions/listar_reservas_agente.php'
+      });
+
+      calendar.render();
     }
   </script>
 </body>
