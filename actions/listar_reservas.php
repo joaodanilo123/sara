@@ -2,7 +2,9 @@
 
 require '../config/conexao.php';
 
-$sql = "SELECT reserva_id, reservista_id, reserva_inicio, reserva_fim, reserva_cor FROM reserva";
+$ambiente = $_GET['ambiente'];
+
+$sql = "SELECT reserva_id, reservista_id, reserva_inicio, reserva_fim, reserva_cor FROM reserva WHERE ambiente_id='$ambiente'";
 $result = $connection->query($sql);
 
 $eventos = [];
