@@ -59,7 +59,7 @@ if (!isset($_SESSION['id'])) {
 
     <ul class='navbar-nav ml-auto ml-md-0'>
       <li class='nav-item dropdown no-arrow'>
-        <a href='logout.php'><button type='button' class='btn btn-outline-light'>Logout</button></a>
+        <a href='../actions/logout.php'><button type='button' class='btn btn-outline-light'>Logout</button></a>
         </div>
       </li>
     </ul>
@@ -143,6 +143,23 @@ if (!isset($_SESSION['id'])) {
         console.log(response)
       }
 
+    }
+
+    async function loadAmbiData(id){
+      const params = new URLSearchParams();
+      params.append('id', id);
+
+      const instance = axios.create({
+        baseURL: 'http://localhost/sara/actions',
+      });
+
+      const response = await instance.post('/dados_usuario.php', params)
+
+      if (response.status === 200) {
+        document.getElementById('indextable').innerHTML = response.data;
+        document.getElementById('content-name').innerText = 'Dados do usuário';
+        console.log(response)
+      }
     }
 
     async function loadUserReservas() {
