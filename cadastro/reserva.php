@@ -44,11 +44,10 @@ $pd = carregar_profs($connection);
             border-radius: 5px;
             padding: 40px;
         }
-    
+
         .borded-strong {
             border: 3px solid black
         }
-    
     </style>
     <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/core/main.min.css">
     <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/daygrid/main.min.css">
@@ -58,21 +57,33 @@ $pd = carregar_profs($connection);
     <script src="../dependencias/fullcalendar-4.1.0/packages/timegrid/main.min.js"></script>
     <script src="../dependencias/fullcalendar-4.1.0/packages/core/locales/pt-br.js"></script>
     <script>
+        var calendar;
+
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
+            calendar = new FullCalendar.Calendar(calendarEl, {
                 locale: 'pt-br',
                 plugins: ['timeGrid'],
                 defaultView: 'timeGridWeek',
                 minTime: "07:45:00",
                 maxTime: "22:30:00",
                 slotDuration: '00:20:00',
-                events: '../actions/listar_reservas.php',
+                
                 height: 500
             });
 
             calendar.render();
         });
+
+        function setEvents(){
+            const ambiente = document.getElementById('ambiente').value;
+            calendar.getEvents().forEach(event => {
+                event.remove();
+            });
+            
+            calendar.addEventSource(`../actions/listar_reservas.php?ambiente=${ambiente}`);
+        }
+
     </script>
     <title>Reservar</title>
 </head>
@@ -85,7 +96,8 @@ $pd = carregar_profs($connection);
             </header>
             <fieldset class="form-group">
                 <label for="ambiente">Ambiente</label>
-                <select name="ambiente" id="ambiente" class="form-control">
+                <select name="ambiente" id="ambiente" class="form-control" onchange="setEvents()">
+                    <option disabled selected>Selecione um ambiente</option>
                     <?php foreach ($ad as $data) : ?>
                         <option value="<?= $data['ambiente_id'] ?>"><?= $data['ambiente_nome'] ?></option>
                     <?php endforeach ?>
@@ -94,6 +106,7 @@ $pd = carregar_profs($connection);
             <fieldset class="form-group">
                 <label for="professor">Reservista:</label>
                 <select name="professor" id="professor" class="form-control">
+                    <option disabled selected>Selecione um professor</option>
                     <?php foreach ($pd as $data) : ?>
                         <option value="<?= $data['usuario_id'] ?>"><?= $data['usuario_nome'] ?></option>
                     <?php endforeach ?>
@@ -112,7 +125,7 @@ $pd = carregar_profs($connection);
             <fieldset class="form-row">
                 <label for="color">Cor de exibição no calendário</label>
                 <select name="color" class="form-control" id="color">
-                    <option value="">Selecione</option>
+                    <option disabled selected>Selecione</option>
                     <option style="color:#FFD700;" value="#FFD700">Amarelo</option>
                     <option style="color:#0071c5;" value="#0071c5">Azul Turquesa</option>
                     <option style="color:#FF4500;" value="#FF4500">Laranja</option>
@@ -134,10 +147,4 @@ $pd = carregar_profs($connection);
 </body>
 <script src="../dependencias/jquery/dist/jquery.min.js"></script>
 <script src="../dependencias/bootstrap/js/bootstrap.min.js"></script>
-<script>
-    document.getElementById('fim').addEventListener('change', (e) => {
-        console.log(e.target.value);
-    })
-</script>
-
 </html>
