@@ -147,4 +147,9 @@ $pd = carregar_profs($connection);
 </body>
 <script src="../dependencias/jquery/dist/jquery.min.js"></script>
 <script src="../dependencias/bootstrap/js/bootstrap.min.js"></script>
+<?php if(isset($_GET['invalid_params'])):?>
+    <script>
+        alert("Alguns dados não foram preenchidos");
+    </script>
+<?php unset($_GET['invalid_params']); endif; ?>
 </html>

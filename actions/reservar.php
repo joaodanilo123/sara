@@ -2,29 +2,43 @@
 require '../config/conexao.php';
 session_start();
 
-$id = uniqid();
-$prof = $_POST['professor'];
-$amb = $_POST['ambiente'];
-$agente = $_SESSION['id'];
-$i = $_POST['inicio'];
-$f = $_POST['fim'];
-$cor = $_POST['color'];
+$params = ['professor', 'ambiente', 'id', 'inicio', 'fim', 'color'];
+$valid_request = true;
+
+foreach ($params as $p) {
+    if (!isset($_POST[$p])) {
+        $valid_request = false;
+        break;
+    }
+}
+
+if ($valid_request) {
+    $id = uniqid();
+    $prof = $_POST['professor'];
+    $amb = $_POST['ambiente'];
+    $agente = $_SESSION['id'];
+    $i = $_POST['inicio'];
+    $f = $_POST['fim'];
+    $cor = $_POST['color'];
 
 
-$sql = "INSERT INTO reserva(reserva_id, ambiente_id, reservista_id, agente_id, reserva_inicio, reserva_fim, reserva_cor) VALUES
-    (
-        '$id', 
-        '$amb',
-        '$prof',
-        '$agente',
-        '$i',
-        '$f',
-        '$cor'
-    )
-";
+    $sql = "INSERT INTO reserva(reserva_id, ambiente_id, reservista_id, agente_id, reserva_inicio, reserva_fim, reserva_cor) VALUES
+        (
+            '$id', 
+            '$amb',
+            '$prof',
+            '$agente',
+            '$i',
+            '$f',
+            '$cor'
+        )
+    ";
 
-if($connection->query($sql)){
-    header('Location: ../painel/agente.php');
+    if ($connection->query($sql)) {
+        header('Location: ../painel/agente.php');
+    } else {
+        echo $connection->error;
+    };
 } else {
-    echo $connection->error;
-};
+    header('Location: ../cadastro/reserva.php?invalid_params=1');
+}
