@@ -93,7 +93,7 @@ if (isset($_SESSION['id'])) {
                 <div class='dropdown-menu' aria-labelledby='pagesDropdown'>
                     <h6 class='dropdown-header'>Opções:</h6>
                     <a class='dropdown-item' onclick="loadUsers()">Listar</a>
-                    <a class='dropdown-item' href='../cadastro/usuario.php'>Cadastrar</a>
+                    <a class='dropdown-item' onclick="loadUserRegisterForm()">Cadastrar</a>
                 </div>
             </li>
         </ul>
@@ -151,6 +151,19 @@ if (isset($_SESSION['id'])) {
             }
 
             req.open('GET', '../actions/listar_ambientes.php', true);
+            req.send();
+        }
+
+        function loadUserRegisterForm() {
+            let req = new XMLHttpRequest();
+            req.onreadystatechange = function() {
+                if (this.status == 200 && this.readyState == 4) {
+                    document.getElementById('indextable').innerHTML = req.responseText;
+                    document.getElementById('content-name').innerText = '👥 Cadastrar Usuário';
+                }
+            }
+
+            req.open('GET', '../cadastro/usuario.php', true);
             req.send();
         }
 
