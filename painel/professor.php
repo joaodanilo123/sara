@@ -1,10 +1,7 @@
 <?php
   session_start();
-  if (isset($_SESSION['id'])) {
-    $user_session = $_SESSION['nome'];
-  } else {
-    header("Location: http://sara.net/login");
-  }
+  require_once '../utils/verificarSessao.php';
+  
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

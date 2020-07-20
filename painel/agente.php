@@ -1,14 +1,11 @@
 <?php
 
 session_start();
-
-if (!isset($_SESSION['id'])) {
-  header('Location: ../login.php');
-}
+require_once '../utils/verificarSessao.php';
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="utf-8">
@@ -126,6 +123,7 @@ if (!isset($_SESSION['id'])) {
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script>
+
     async function loadUserData() {
       const id = '<?= $_SESSION['id'] ?>';
       const params = new URLSearchParams();
@@ -165,6 +163,7 @@ if (!isset($_SESSION['id'])) {
     async function loadUserReservas() {
       document.getElementById('content-name').innerText = 'Reservas feitas por você';
       var calendarEl = document.getElementById('indextable');
+      calendarEl.innerHTML = '';
       var calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'pt-br',
         plugins: ['timeGrid'],

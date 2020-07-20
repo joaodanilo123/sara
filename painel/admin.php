@@ -1,16 +1,7 @@
 <?php
 
-if (!isset($_SESSION)) {
-    session_start();
-}
-
-if (isset($_SESSION['id'])) {
-    $nome = $_SESSION['nome'];
-    $id = $_SESSION['id'];
-    include_once "../config/conexao.php";
-} else {
-    header("Location: ../login.php");
-}
+session_start();
+require_once '../utils/verificarSessao.php';
 
 ?>
 <!DOCTYPE html>
