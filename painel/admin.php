@@ -64,7 +64,11 @@ if (isset($_SESSION['id'])) {
 
         <span class='navbar-brand mr-1' href='./admin.php'>🔓 <?= $nome ?></span>
 
-        <ul class='navbar-nav ml-auto ml-md-0'>
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <ul class='navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0'>
             <li class='nav-item dropdown no-arrow'>
                 <a href='../actions/logout.php'><button type='button' class='btn btn-outline-light'>Logout</button></a>
                 </div>
@@ -74,6 +78,7 @@ if (isset($_SESSION['id'])) {
     </nav>
 
     <div id='wrapper'>
+
         <ul class='sidebar navbar-nav'>
             <li class='nav-item dropdown'>
                 <a class='nav-link dropdown-toggle' href='#' id='pagesDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
@@ -82,7 +87,7 @@ if (isset($_SESSION['id'])) {
                 </a>
                 <div class='dropdown-menu' aria-labelledby='pagesDropdown'>
                     <a class='dropdown-item' onclick="loadEnvs()">Listar</a>
-                    <a class='dropdown-item' href='../cadastro/ambiente.php'>Cadastrar</a>
+                    <a class='dropdown-item' onclick="loadEnvRegisterForm()">Cadastrar</a>
                 </div>
             </li>
             <li class='nav-item dropdown'>
@@ -167,12 +172,16 @@ if (isset($_SESSION['id'])) {
             req.send();
         }
 
-        function delAmbiente() {
+        function loadEnvRegisterForm() {
             let req = new XMLHttpRequest();
-            req.onreadystatechange = loadEnvs
+            req.onreadystatechange = function() {
+                if (this.status == 200 && this.readyState == 4) {
+                    document.getElementById('indextable').innerHTML = req.responseText;
+                    document.getElementById('content-name').innerText = '🚪 Cadastrar Ambiente';
+                }
+            }
 
-
-            req.open('GET', '../actions/listar_ambientes.php', true);
+            req.open('GET', '../cadastro/ambiente.php', true);
             req.send();
         }
     </script>
