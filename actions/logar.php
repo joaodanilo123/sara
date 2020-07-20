@@ -20,6 +20,7 @@ if (isset($submit_button)) {
         $_SESSION['email'] = $dados['usuario_email'];
         $_SESSION['id'] = $dados['usuario_id'];
         $_SESSION['nome'] = $dados['usuario_nome'];
+        $_SESSION['hierarquia'] = $dados['hierarquia_nome'];
 
         switch ($dados['hierarquia_nome']) {
             case 'admin':
