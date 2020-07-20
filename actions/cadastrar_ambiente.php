@@ -11,7 +11,7 @@
 	$connection->query($query) or die($connection->error);
 	
 	if (!$connection->error) {
-		header('Location: ../cadastro/ambiente.php?erro=no');
+		header('Location: ../painel/admin.php?erro=no');
 	} else {
-		header('Location: ../cadastro/ambiente.php?erro=erro');
+		header('Location: ../painel/admin.php?erro=erro');
 	}
