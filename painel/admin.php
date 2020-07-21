@@ -53,7 +53,7 @@ require_once '../utils/verificarSessao.php';
 <body id="page-top">
     <nav class='navbar navbar-expand navbar-dark bg-dark static-top'>
 
-        <span class='navbar-brand mr-1' href='./admin.php'>🔓 <?= $nome ?></span>
+        <span class='navbar-brand mr-1' href='./admin.php'>🔓 <?= $_SESSION['nome'] ?></span>
 
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
             <i class="fas fa-bars"></i>
@@ -123,8 +123,9 @@ require_once '../utils/verificarSessao.php';
     <script src='../dependencias/js/sb-admin.min.js'></script>
     <script src='../dependencias/js/demo/datatables-demo.js'></script>
     <script src='../dependencias/js/demo/chart-area-demo.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        function loadUsers() {
+        async function loadUsers() {
             let req = new XMLHttpRequest();
             req.onreadystatechange = function() {
                 if (this.status == 200 && this.readyState == 4) {
@@ -137,7 +138,7 @@ require_once '../utils/verificarSessao.php';
             req.send();
         }
 
-        function loadEnvs() {
+        async function loadEnvs() {
             let req = new XMLHttpRequest();
             req.onreadystatechange = function() {
                 if (this.status == 200 && this.readyState == 4) {
@@ -150,7 +151,7 @@ require_once '../utils/verificarSessao.php';
             req.send();
         }
 
-        function loadUserRegisterForm() {
+        async function loadUserRegisterForm() {
             let req = new XMLHttpRequest();
             req.onreadystatechange = function() {
                 if (this.status == 200 && this.readyState == 4) {
@@ -163,7 +164,7 @@ require_once '../utils/verificarSessao.php';
             req.send();
         }
 
-        function loadEnvRegisterForm() {
+        async function loadEnvRegisterForm() {
             let req = new XMLHttpRequest();
             req.onreadystatechange = function() {
                 if (this.status == 200 && this.readyState == 4) {
@@ -174,6 +175,28 @@ require_once '../utils/verificarSessao.php';
 
             req.open('GET', '../cadastro/ambiente.php', true);
             req.send();
+        }
+
+        async function inativateEnv(id) {
+            const params = new URLSearchParams();
+            params.append('id', id);
+
+            const instance = axios.create({
+                baseURL: 'http://localhost/sara/actions',
+            });
+
+            try {
+                const response = await instance.post('/inativar_ambiente.php', params);
+                alert('Ambiente inativado');
+                loadEnvs();
+            } catch(error) {
+                alert('Não foi possivel realizar a operação');
+                loadEnvs();
+            }
+        }
+
+        async function loadEnvReserves(id) {
+            
         }
     </script>
 </body>
