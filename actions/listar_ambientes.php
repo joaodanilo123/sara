@@ -23,11 +23,9 @@ $connection->close();
                 <td><?= $row['ambiente_ativo'] ?></td>
                 <td style="text-align:center">
                     <?php if($row['ambiente_ativo'] == 'sim'): ?>
-                        <a href="#" title="Inativar" onclick="inativateEnv('<?= $row['ambiente_id'] ?>')" class="opcao">❌</a>
                         <a href="#" title="Editar ambiente" onclick="loadEnvEditForm('<?= $row['ambiente_id'] ?>')" class="opcao">✏️</a>
                         <a href="#" title="Ver reservas" onclick="loadEnvReserves('<?= $row['ambiente_id'] ?>')" class="opcao">🔍</a>
                     <?php else: ?>
-                        <a href="#" title="Ativar ambiente" onclick="inativateEnv('<?= $row['ambiente_id'] ?>')" class="opcao">✔️</a>
                         <a href="#" title="Editar ambiente" onclick="loadEnvEditForm('<?= $row['ambiente_id'] ?>')" class="opcao">✏️</a>
                         <a href="#" title="Ver reservas" onclick="loadEnvReserves('<?= $row['ambiente_id'] ?>')" class="opcao">🔍</a>    
                     <?php endif; ?>
