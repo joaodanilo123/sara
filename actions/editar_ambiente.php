@@ -2,13 +2,13 @@
 
 include '../config/conexao.php';
 
+$id = $_POST['id'];
 $nome = $_POST['nome'];
 $numero = $_POST['numero'];
 $tipo_ambiente_id = $_POST['tipoa'];
 $predio = $_POST['predio'];
-$id = uniqid();
 $status = $_POST['status'];
-$query = "INSERT INTO ambiente(ambiente_id, ambiente_nome, ambiente_numero, tipo_ambiente_id, predio_id, ambiente_ativo) VALUES ('$id','$nome', '$numero', '$tipo_ambiente_id', '$predio', '$status')";
+$query = "UPDATE ambiente SET ambiente_nome='$nome', ambiente_numero='$numero', tipo_ambiente_id='$tipo_ambiente_id', predio_id='$predio', ambiente_ativo='$status' WHERE ambiente_id='$id'";
 $connection->query($query) or die($connection->error);
 
 if (!$connection->error) {

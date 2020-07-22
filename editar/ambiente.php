@@ -24,7 +24,7 @@ $connection->close();
 
 <div class="container">
     <div class="col-md-7 order-md-1">
-        <form class="needs-validation" action="../actions/cadastrar_ambiente.php" method="post" novalidate>
+        <form class="needs-validation" action="../actions/editar_ambiente.php" method="post" novalidate>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nome">
@@ -85,7 +85,7 @@ $connection->close();
                 </div>
             <?php else : ?>
                 <div>
-                    <input id="status" name="status" type="radio" value="sim" checked required>
+                    <input id="status" name="status" type="radio" value="não" checked required>
                     <label for="status">Não</label>
                 </div>
                 <div>
@@ -96,6 +96,7 @@ $connection->close();
 
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit">Atualizar</button>
+            <input type="hidden" name="id" value="<?=$dadosAtuais['ambiente_id']?>">
         </form>
     </div>
 </div>
