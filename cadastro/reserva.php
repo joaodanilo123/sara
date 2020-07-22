@@ -18,7 +18,7 @@ function carregar_profs(mysqli $conn)
 
 function carregar_ambientes(mysqli $conn)
 {
-    $sql = "SELECT ambiente_nome, ambiente_id FROM ambiente";
+    $sql = "SELECT ambiente_nome, ambiente_id FROM ambiente WHERE ambiente_ativo='sim'";
     $query = $conn->query($sql);
     $result = array();
     while ($row = $query->fetch_assoc()) {

@@ -161,6 +161,9 @@ require_once '../utils/verificarSessao.php';
     }
 
     async function loadUserReservas() {
+      const usuario = '<?= $_SESSION['id'] ?>';
+      const ambiente = 0;
+
       document.getElementById('content-name').innerText = 'Reservas feitas por você';
       var calendarEl = document.getElementById('indextable');
       calendarEl.innerHTML = '';
@@ -171,7 +174,7 @@ require_once '../utils/verificarSessao.php';
         minTime: "07:45:00",
         maxTime: "22:30:00",
         slotDuration: '00:20:00',
-        events: '../actions/listar_reservas_agente.php'
+        events: `../actions/listar_reservas.php?usuario=${usuario}&hierarquia=agente`,
       });
 
       calendar.render();

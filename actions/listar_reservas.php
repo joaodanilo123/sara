@@ -2,9 +2,21 @@
 
 require '../config/conexao.php';
 
-$ambiente = $_GET['ambiente'];
+$usuario = isset($_GET['id']) ? $_GET['id'] : null;
+$ambiente = isset($_GET['ambiente']) ? $_GET['ambiente'] : null;
+$hierarquia = isset($_GET['hierarquia']) ? $_GET['hierarquia'] : null;
 
-$sql = "SELECT reserva_id, reservista_id, reserva_inicio, reserva_fim, reserva_cor FROM reserva WHERE ambiente_id='$ambiente'";
+$sql = "SELECT * FROM reserva WHERE ";
+
+if ($usuario and $hierarquia) {
+    $sql .= $hierarquia == 'agente' ? "agente_id=" : "reservista_id=";
+    $sql .= "'$usuario' ";
+}
+
+if ($ambiente) {
+    $sql .= "AND ambiente_id='$ambiente'";
+}
+
 $result = $connection->query($sql);
 
 $eventos = [];
