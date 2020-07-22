@@ -1,7 +1,7 @@
 <?php
 include '../config/conexao.php';
 
-$sql = "SELECT * FROM ambiente";
+$sql = "SELECT * FROM ambiente ORDER BY ambiente_ativo DESC";
 $result = $connection->query($sql);
 $connection->close();
 
@@ -22,9 +22,15 @@ $connection->close();
                 <td style="text-align:center"><?= $row['ambiente_numero'] ?></td>
                 <td><?= $row['ambiente_ativo'] ?></td>
                 <td style="text-align:center">
-                    <a href="#" onclick="inativateEnv('<?= $row['ambiente_id'] ?>')" class="opcao">🗑️</a>
-                    <a href="#" class="opcao">✏️</a>
-                    <a href="#" onclick="loadEnvReserves('<?= $row['ambiente_id'] ?>')" class="opcao">🔍</a>
+                    <?php if($row['ambiente_ativo'] == 'sim'): ?>
+                        <a href="#" title="Inativar" onclick="inativateEnv('<?= $row['ambiente_id'] ?>')" class="opcao">❌</a>
+                        <a href="#" title="Editar ambiente" onclick="loadEnvEditForm('<?= $row['ambiente_id'] ?>')" class="opcao">✏️</a>
+                        <a href="#" title="Ver reservas" onclick="loadEnvReserves('<?= $row['ambiente_id'] ?>')" class="opcao">🔍</a>
+                    <?php else: ?>
+                        <a href="#" title="Ativar ambiente" onclick="inativateEnv('<?= $row['ambiente_id'] ?>')" class="opcao">✔️</a>
+                        <a href="#" title="Editar ambiente" onclick="loadEnvEditForm('<?= $row['ambiente_id'] ?>')" class="opcao">✏️</a>
+                        <a href="#" title="Ver reservas" onclick="loadEnvReserves('<?= $row['ambiente_id'] ?>')" class="opcao">🔍</a>    
+                    <?php endif; ?>
                 </td>
             </tr>
         <?php endwhile; ?>

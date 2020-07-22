@@ -7,7 +7,15 @@ $tipos_ambiente = array();
 while ($row = $query->fetch_assoc()) {
     array_push($tipos_ambiente, $row);
 }
+
+$query = $connection->query('SELECT * FROM predio');
+$predios = array();
+while ($row = $query->fetch_assoc()) {
+    array_push($predios, $row);
+}
+
 $connection->close();
+
 ?>
 
 <div class="container">
@@ -38,10 +46,17 @@ $connection->close();
                 <?php endforeach; ?>
             </div>
 
+            <select name="predio" id="predio" class="form-control">
+                <option disabled selected>Selecione um prédio</option>
+                <?php foreach ($predios as $p) : ?>
+                    <option value="<?= $p['predio_id'] ?>"><?= $p['predio_nome'] ?></option>
+                <?php endforeach ?>
+            </select>
+            
+            
 
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit">Cadastrar</button>
         </form>
     </div>
 </div>
-

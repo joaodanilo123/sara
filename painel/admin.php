@@ -177,26 +177,38 @@ require_once '../utils/verificarSessao.php';
             req.send();
         }
 
-        async function inativateEnv(id) {
+        async function loadEnvEditForm(ambienteId) {
             const params = new URLSearchParams();
-            params.append('id', id);
+
+            const instance = axios.create({
+                baseURL: 'http://localhost/sara/editar',
+            });
+
+            try {
+                const response = await instance.get(`/ambiente.php?ambiente=${ambienteId}`);
+                document.getElementById('indextable').innerHTML = response.data;
+                document.getElementById('content-name').innerText = '🚪 Editar Ambiente';
+            } catch (error) {
+
+            }
+        }
+
+        async function loadEnvReserves(ambienteId) {
+            const params = new URLSearchParams();
+            params.append('ambiente', ambienteId);
 
             const instance = axios.create({
                 baseURL: 'http://localhost/sara/actions',
             });
 
-            try {
-                const response = await instance.post('/inativar_ambiente.php', params);
-                alert('Ambiente inativado');
+            /*try {
+                const response = await instance.post('/listar_reservas.php', params);
+                alert('Ambiente inativado com sucesso!');
                 loadEnvs();
-            } catch(error) {
+            } catch (error) {
                 alert('Não foi possivel realizar a operação');
                 loadEnvs();
-            }
-        }
-
-        async function loadEnvReserves(id) {
-            
+            }*/
         }
     </script>
 </body>
