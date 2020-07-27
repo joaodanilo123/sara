@@ -22,6 +22,13 @@ require_once '../utils/verificarSessao.php';
 
     <!-- Custom styles for this template-->
     <link href="../dependencias/css/sb-admin.css" rel="stylesheet">
+    <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/core/main.min.css">
+    <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/daygrid/main.min.css">
+    <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/timegrid/main.min.css">
+    <script src="../dependencias/fullcalendar-4.1.0/packages/core/main.min.js"></script>
+    <script src="../dependencias/fullcalendar-4.1.0/packages/daygrid/main.min.js"></script>
+    <script src="../dependencias/fullcalendar-4.1.0/packages/timegrid/main.min.js"></script>
+    <script src="../dependencias/fullcalendar-4.1.0/packages/core/locales/pt-br.js"></script>
     <style>
         .opcao {
             text-decoration: none;
@@ -92,6 +99,22 @@ require_once '../utils/verificarSessao.php';
                     <a class='dropdown-item' onclick="loadUserRegisterForm()">Cadastrar</a>
                 </div>
             </li>
+            <li class='nav-item dropdown'>
+                <a class='nav-link dropdown-toggle' href='#' id='pagesDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                    <i class='fas fa-fw'>🏢</i>
+                    <span>Prédios</span>
+                </a>
+                <div class='dropdown-menu' aria-labelledby='pagesDropdown'>
+                    <a class='dropdown-item' onclick="loadBuildings()">Listar</a>
+                    <a class='dropdown-item' onclick="loadBuildingRegisterForm()">Cadastrar</a>
+                </div>
+            </li>
+            <li class='nav-item'>
+                <a class='nav-link' onclick="loadSearch()">
+                    <i class='fas fa-fw'>👥</i>
+                    <span>Buscar reservas</span>
+                </a>
+            </li>
         </ul>
 
         <div id='content-wrapper'>
@@ -138,19 +161,6 @@ require_once '../utils/verificarSessao.php';
             req.send();
         }
 
-        async function loadEnvs() {
-            let req = new XMLHttpRequest();
-            req.onreadystatechange = function() {
-                if (this.status == 200 && this.readyState == 4) {
-                    document.getElementById('indextable').innerHTML = req.responseText;
-                    document.getElementById('content-name').innerText = '🚪 Ambientes';
-                }
-            }
-
-            req.open('GET', '../actions/listar_ambientes.php', true);
-            req.send();
-        }
-
         async function loadUserRegisterForm() {
             let req = new XMLHttpRequest();
             req.onreadystatechange = function() {
@@ -161,6 +171,19 @@ require_once '../utils/verificarSessao.php';
             }
 
             req.open('GET', '../cadastro/usuario.php', true);
+            req.send();
+        }
+
+        async function loadEnvs() {
+            let req = new XMLHttpRequest();
+            req.onreadystatechange = function() {
+                if (this.status == 200 && this.readyState == 4) {
+                    document.getElementById('indextable').innerHTML = req.responseText;
+                    document.getElementById('content-name').innerText = '🚪 Ambientes';
+                }
+            }
+
+            req.open('GET', '../actions/listar_ambientes.php', true);
             req.send();
         }
 
@@ -185,7 +208,7 @@ require_once '../utils/verificarSessao.php';
             });
 
             try {
-                const response = await instance.get(`/ambiente.php?ambiente=${ambienteId}`);
+                const response = await instance.get(`/ambiente.php?ambiente=${ambienteId}`)
                 document.getElementById('indextable').innerHTML = response.data;
                 document.getElementById('content-name').innerText = '🚪 Editar Ambiente';
             } catch (error) {
@@ -193,22 +216,80 @@ require_once '../utils/verificarSessao.php';
             }
         }
 
-        async function loadEnvReserves(ambienteId) {
-            const params = new URLSearchParams();
-            params.append('ambiente', ambienteId);
+        function loadBuildings() {
+            let req = new XMLHttpRequest();
+            req.onreadystatechange = function() {
+                if (this.status == 200 && this.readyState == 4) {
+                    document.getElementById('indextable').innerHTML = req.responseText;
+                    document.getElementById('content-name').innerText = '🏢 Prédios';
+                }
+            }
 
-            const instance = axios.create({
-                baseURL: 'http://localhost/sara/actions',
+            req.open('GET', '../actions/listar_predios.php', true);
+            req.send();
+        }
+
+        function loadBuildingRegisterForm() {
+            let req = new XMLHttpRequest();
+            req.onreadystatechange = function() {
+                if (this.status == 200 && this.readyState == 4) {
+                    document.getElementById('indextable').innerHTML = req.responseText;
+                    document.getElementById('content-name').innerText = '🏢 Cadastrar Prédio';
+                }
+            }
+
+            req.open('GET', '../cadastro/predio.php', true);
+            req.send();
+        }
+
+        function loadBuildingEditForm() {
+
+        }
+
+        function loadBuildingEnvs(predioId) {
+            let req = new XMLHttpRequest();
+            req.onreadystatechange = function() {
+                if (this.status == 200 && this.readyState == 4) {
+                    document.getElementById('indextable').innerHTML = req.responseText;
+                    document.getElementById('content-name').innerText = '🚪 Ambientes';
+                }
+            }
+
+            req.open('GET', `../actions/listar_ambientes.php?predio=${predioId}`, true);
+            req.send();
+        }
+
+        function loadSearch() {
+            let req = new XMLHttpRequest();
+            req.onreadystatechange = function() {
+                if (this.status == 200 && this.readyState == 4) {
+                    document.getElementById('indextable').innerHTML = req.responseText;
+                    document.getElementById('content-name').innerText = '🚪 Buscar reservas';
+                }
+            }
+
+            req.open('GET', `../actions/filtrar_reservas.php`, true);
+            req.send();
+        }
+
+        async function loadReserves() {
+            const env = document.getElementById('ambiente').value;
+            const rvt = document.getElementById('reservista').value;
+            const agt = document.getElementById('agente').value;
+
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'pt-br',
+                plugins: ['timeGrid'],
+                defaultView: 'timeGridWeek',
+                minTime: "07:45:00",
+                maxTime: "22:30:00",
+                slotDuration: '00:20:00',
+                events: `../actions/listar_reservas.php?ambiente=${env}&prof=${rvt}&agente=${agt}`,
             });
 
-            /*try {
-                const response = await instance.post('/listar_reservas.php', params);
-                alert('Ambiente inativado com sucesso!');
-                loadEnvs();
-            } catch (error) {
-                alert('Não foi possivel realizar a operação');
-                loadEnvs();
-            }*/
+            calendar.render();
         }
     </script>
 </body>

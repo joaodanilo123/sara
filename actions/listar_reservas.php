@@ -10,11 +10,11 @@ $sql = "SELECT * FROM reserva WHERE ";
 
 if ($usuario and $hierarquia) {
     $sql .= $hierarquia == 'agente' ? "agente_id=" : "reservista_id=";
-    $sql .= "'$usuario' ";
+    $sql .= "'$usuario' AND ";
 }
 
 if ($ambiente) {
-    $sql .= "AND ambiente_id='$ambiente'";
+    $sql .= "ambiente_id='$ambiente'";
 }
 
 $result = $connection->query($sql);
@@ -27,6 +27,8 @@ function carregar_prof(string $id){
     $sql = "SELECT usuario_nome FROM usuario WHERE usuario_id = '$id'";
     return $connection->query($sql)->fetch_assoc()['usuario_nome'];
 }
+
+
 
 while($row = $result->fetch_assoc()){
     $id = $row['reserva_id'];
