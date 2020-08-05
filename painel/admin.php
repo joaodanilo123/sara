@@ -111,7 +111,7 @@ require_once '../utils/verificarSessao.php';
             </li>
             <li class='nav-item'>
                 <a class='nav-link' onclick="loadSearch()">
-                    <i class='fas fa-fw'>👥</i>
+                    <i class='fas fa-fw'>📅</i>
                     <span>Buscar reservas</span>
                 </a>
             </li>
@@ -259,16 +259,16 @@ require_once '../utils/verificarSessao.php';
             req.send();
         }
 
-        function loadSearch() {
+        function loadSearch(env='todos',prof='todos',agente='todos') {
             let req = new XMLHttpRequest();
             req.onreadystatechange = function() {
                 if (this.status == 200 && this.readyState == 4) {
                     document.getElementById('indextable').innerHTML = req.responseText;
-                    document.getElementById('content-name').innerText = '🚪 Buscar reservas';
+                    document.getElementById('content-name').innerText = '📅 Buscar reservas';
                 }
             }
 
-            req.open('GET', `../actions/filtrar_reservas.php`, true);
+            req.open('GET', `../actions/filtrar_reservas.php?ambiente=${env}&agente=${agente}&prof=${prof}`, true);
             req.send();
         }
 

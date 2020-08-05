@@ -32,7 +32,7 @@ function carregar_nomes_predios($predio_id){
                 <td><?= $row['ambiente_ativo'] ?></td>
                 <td style="text-align:center">
                     <a href="#" title="Editar ambiente" onclick="loadEnvEditForm('<?= $row['ambiente_id'] ?>')" class="opcao">✏️</a>
-                    <a href="#" title="Ver reservas" onclick="loadEnvReserves('<?= $row['ambiente_id'] ?>')" class="opcao">🔍</a>
+                    <a href="#" title="Ver reservas" onclick="loadSearch('<?= $row['ambiente_id'] ?>')" class="opcao">🔍</a>
                 </td>
             </tr>
         <?php endwhile; ?>
