@@ -19,7 +19,7 @@ require_once '../utils/verificarSessao.php';
 
     <!-- Page level plugin CSS-->
     <link href="../dependencias/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="../assets/panel_custom.css">
     <!-- Custom styles for this template-->
     <link href="../dependencias/css/sb-admin.css" rel="stylesheet">
     <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/core/main.min.css">
@@ -29,32 +29,6 @@ require_once '../utils/verificarSessao.php';
     <script src="../dependencias/fullcalendar-4.1.0/packages/daygrid/main.min.js"></script>
     <script src="../dependencias/fullcalendar-4.1.0/packages/timegrid/main.min.js"></script>
     <script src="../dependencias/fullcalendar-4.1.0/packages/core/locales/pt-br.js"></script>
-    <style>
-        .opcao {
-            text-decoration: none;
-            transition-property: all;
-            transition-duration: 0.2s;
-        }
-
-        .opcao:hover {
-            font-weight: bold;
-            font-size: 1.2rem;
-            text-decoration: none;
-        }
-
-        figure {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-content: center;
-            flex-wrap: wrap;
-        }
-
-        figure img {
-            max-height: 300px;
-            max-width: 300px;
-        }
-    </style>
 </head>
 
 <body id="page-top">
@@ -147,151 +121,7 @@ require_once '../utils/verificarSessao.php';
     <script src='../dependencias/js/demo/datatables-demo.js'></script>
     <script src='../dependencias/js/demo/chart-area-demo.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        async function loadUsers() {
-            let req = new XMLHttpRequest();
-            req.onreadystatechange = function() {
-                if (this.status == 200 && this.readyState == 4) {
-                    document.getElementById('indextable').innerHTML = req.responseText;
-                    document.getElementById('content-name').innerText = '👥 Usuários';
-                }
-            }
-
-            req.open('GET', '../actions/listar_usuarios.php', true);
-            req.send();
-        }
-
-        async function loadUserRegisterForm() {
-            let req = new XMLHttpRequest();
-            req.onreadystatechange = function() {
-                if (this.status == 200 && this.readyState == 4) {
-                    document.getElementById('indextable').innerHTML = req.responseText;
-                    document.getElementById('content-name').innerText = '👥 Cadastrar Usuário';
-                }
-            }
-
-            req.open('GET', '../cadastro/usuario.php', true);
-            req.send();
-        }
-
-        async function loadEnvs() {
-            let req = new XMLHttpRequest();
-            req.onreadystatechange = function() {
-                if (this.status == 200 && this.readyState == 4) {
-                    document.getElementById('indextable').innerHTML = req.responseText;
-                    document.getElementById('content-name').innerText = '🚪 Ambientes';
-                }
-            }
-
-            req.open('GET', '../actions/listar_ambientes.php', true);
-            req.send();
-        }
-
-        async function loadEnvRegisterForm() {
-            let req = new XMLHttpRequest();
-            req.onreadystatechange = function() {
-                if (this.status == 200 && this.readyState == 4) {
-                    document.getElementById('indextable').innerHTML = req.responseText;
-                    document.getElementById('content-name').innerText = '🚪 Cadastrar Ambiente';
-                }
-            }
-
-            req.open('GET', '../cadastro/ambiente.php', true);
-            req.send();
-        }
-
-        async function loadEnvEditForm(ambienteId) {
-            const params = new URLSearchParams();
-
-            const instance = axios.create({
-                baseURL: 'http://localhost/sara/editar',
-            });
-
-            try {
-                const response = await instance.get(`/ambiente.php?ambiente=${ambienteId}`)
-                document.getElementById('indextable').innerHTML = response.data;
-                document.getElementById('content-name').innerText = '🚪 Editar Ambiente';
-            } catch (error) {
-
-            }
-        }
-
-        function loadBuildings() {
-            let req = new XMLHttpRequest();
-            req.onreadystatechange = function() {
-                if (this.status == 200 && this.readyState == 4) {
-                    document.getElementById('indextable').innerHTML = req.responseText;
-                    document.getElementById('content-name').innerText = '🏢 Prédios';
-                }
-            }
-
-            req.open('GET', '../actions/listar_predios.php', true);
-            req.send();
-        }
-
-        function loadBuildingRegisterForm() {
-            let req = new XMLHttpRequest();
-            req.onreadystatechange = function() {
-                if (this.status == 200 && this.readyState == 4) {
-                    document.getElementById('indextable').innerHTML = req.responseText;
-                    document.getElementById('content-name').innerText = '🏢 Cadastrar Prédio';
-                }
-            }
-
-            req.open('GET', '../cadastro/predio.php', true);
-            req.send();
-        }
-
-        function loadBuildingEditForm() {
-
-        }
-
-        function loadBuildingEnvs(predioId) {
-            let req = new XMLHttpRequest();
-            req.onreadystatechange = function() {
-                if (this.status == 200 && this.readyState == 4) {
-                    document.getElementById('indextable').innerHTML = req.responseText;
-                    document.getElementById('content-name').innerText = '🚪 Ambientes';
-                }
-            }
-
-            req.open('GET', `../actions/listar_ambientes.php?predio=${predioId}`, true);
-            req.send();
-        }
-
-        function loadSearch(env='todos',prof='todos',agente='todos') {
-            let req = new XMLHttpRequest();
-            req.onreadystatechange = function() {
-                if (this.status == 200 && this.readyState == 4) {
-                    document.getElementById('indextable').innerHTML = req.responseText;
-                    document.getElementById('content-name').innerText = '📅 Buscar reservas';
-                }
-            }
-
-            req.open('GET', `../actions/filtrar_reservas.php?ambiente=${env}&agente=${agente}&prof=${prof}`, true);
-            req.send();
-        }
-
-        async function loadReserves() {
-            const env = document.getElementById('ambiente').value;
-            const rvt = document.getElementById('reservista').value;
-            const agt = document.getElementById('agente').value;
-
-            var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                locale: 'pt-br',
-                plugins: ['timeGrid'],
-                defaultView: 'timeGridWeek',
-                minTime: "07:45:00",
-                maxTime: "22:30:00",
-                slotDuration: '00:20:00',
-                events: `../actions/listar_reservas.php?ambiente=${env}&prof=${rvt}&agente=${agt}`,
-            });
-
-            calendar.render();
-        }
-    </script>
+    <script src="../assets/panel_admin.js"></script>
 </body>
 
 </html>

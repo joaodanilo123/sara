@@ -24,7 +24,7 @@ $connection->close();
                 <td><?= $row['usuario_email'] ?></td>
                 <td><?= $row['hierarquia_nome'] ?></td>
                 <td style="text-align:center">
-                    <a href="" class="opcao">✏️</a>
+                    <a onclick="loadUserEditForm('<?=$row['usuario_id']?>')" class="opcao">✏️</a>
                     <?php if($row['hierarquia_nome'] == 'professor'):?>
                         <a onclick="loadSearch('todos', '<?=$row['usuario_id']?>', 'todos')" class="opcao">🔍</a>
                     <?php elseif($row['hierarquia_nome'] == 'agente'):?>

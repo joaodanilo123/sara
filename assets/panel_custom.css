@@ -1,0 +1,24 @@
+.opcao {
+    text-decoration: none;
+    transition-property: all;
+    transition-duration: 0.2s;
+}
+
+.opcao:hover {
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+figure {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+figure img {
+    max-height: 300px;
+    max-width: 300px;
+}

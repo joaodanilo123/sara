@@ -2,7 +2,7 @@
 require '../config/conexao.php';
 session_start();
 
-$params = ['professor', 'ambiente', 'id', 'inicio', 'fim', 'color'];
+$params = ['professor', 'ambiente', 'inicio', 'fim', 'color'];
 $valid_request = true;
 
 foreach ($params as $p) {
@@ -40,5 +40,5 @@ if ($valid_request) {
         echo $connection->error;
     };
 } else {
-    header('Location: ../cadastro/reserva.php?invalid_params=1');
+    header('Location: ../painel/agente.php?invalid_params=1');
 }
