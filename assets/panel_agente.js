@@ -1,29 +1,29 @@
-async function loadReserveForm() {
+function loadReserveForm(_ambiente = false) {
     let req = new XMLHttpRequest();
     req.onreadystatechange = function () {
         if (this.status == 200 && this.readyState == 4) {
             document.getElementById('indextable').innerHTML = req.responseText;
             document.getElementById('content-name').innerText = '📅 Nova reserva';
+            if (_ambiente){
+                loadReserveFormCalendar(_ambiente)
+            }
         }
     }
 
-    req.open('GET', `../cadastro/reserva.php`, true);
+    req.open('GET', `../cadastro/reserva.php`, true );
     req.send();
 
 }
 
 var storedEnv;
 
-async function loadReserveFormCalendar() {
+async function loadReserveFormCalendar(_ambiente = false) {
 
-    var ambiente = document.getElementById('ambiente').value
+    var ambiente = _ambiente || document.getElementById('ambiente').value
     var calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML = "";
 
     const eventsURL = `../actions/listar_reservas.php?ambiente=${ambiente}`
-
-    data = await fetch(eventsURL);
-
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'pt-br',

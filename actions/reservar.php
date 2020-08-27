@@ -35,7 +35,7 @@ if ($valid_request) {
     ";
 
     if ($connection->query($sql)) {
-        header('Location: ../painel/agente.php');
+        header("Location: ../painel/agente.php?page=reserva&ambiente=$amb");
     } else {
         echo $connection->error;
     };

@@ -106,9 +106,17 @@ require_once '../utils/verificarSessao.php';
 </body>
 
 </html>
-<?php if (isset($_GET['invalid_params'])) : ?>
+<?php 
+if (isset($_GET['invalid_params'])) : ?>
     <script>
         alert("Alguns dados não foram preenchidos");
     </script>
     <?php unset($_GET['invalid_params']);
-endif; ?>
+endif; 
+if(isset($_GET['page'])):
+    if($_GET['page'] == 'reserva'): ?>
+        <script>
+            loadReserveForm('<?=$_GET['ambiente']?>')
+        </script>
+    <?php endif ?>
+<?php endif ?>
