@@ -3,6 +3,8 @@
 session_start();
 require_once '../utils/verificarSessao.php';
 
+$message = isset($_GET['message']) ? $_GET['message'] : '';
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -98,7 +100,7 @@ require_once '../utils/verificarSessao.php';
                     <div class="card-header" id="content-name">
                         <figure>
                             <img src="../assets/SARA.png" alt="logotipo sara">
-                            <figcaption><b>Selecione uma opção ao lado</b></figcaption>
+                            <figcaption><b>Selecione uma opção ao lado <hr> <?= $message ?> </b></figcaption>
                         </figure>
                     </div>
                     <div class="card-body" id="indextable">
