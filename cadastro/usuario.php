@@ -15,19 +15,25 @@
         <fieldset class="col-md">
 
             <div class="custom-control custom-radio">
-                <input id="prof" name="tipou" type="radio" class="custom-control-input" value="professor" required>
+                <input id="professor" name="tipou" type="radio" class="custom-control-input" value="professor" required onclick="changeTokenField()">
                 <label class="custom-control-label" for="prof">Professor</label>
             </div>
             <div class="custom-control custom-radio">
-                <input id="adm" name="tipou" type="radio" class="custom-control-input" value="admin" required>
+                <input id="admin" name="tipou" type="radio" class="custom-control-input" value="admin" required onclick="changeTokenField()">
                 <label class="custom-control-label" for="adm">Administrador</label>
             </div>
             <div class="custom-control custom-radio">
-                <input id="ap" name="tipou" type="radio" class="custom-control-input" value="agente" required>
+                <input id="agente" name="tipou" type="radio" class="custom-control-input" value="agente" required onclick="changeTokenField()">
                 <label class="custom-control-label" for="ap">Agente de Portaria</label>
             </div>
+
         </fieldset>
 
+        <fieldset class="col-md">
+            <label for="token">Token</label>
+            <input type="text" name="token" id="token" class="form-control" disabled>
+        </fieldset>
+        
         <br>
 
         <button class="btn btn-primary btn-lg btn-block" type="submit">Cadastrar</button>
