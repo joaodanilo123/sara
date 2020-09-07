@@ -17,7 +17,7 @@ $connection->close();
 
 <div class="container">
     <div class="col-md-7 order-md-1">
-        <form class="needs-validation" action="../actions/editar_ambiente.php" method="post" novalidate>
+        <form class="needs-validation" action="../actions/editar_usuario.php" method="post" novalidate>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nome">
@@ -60,10 +60,15 @@ $connection->close();
                 <label for="token">Token</label>
                 <input type="text" name="token" id="token" class="form-control" value="<?= $dadosAtuais['usuario_token'] ?>">
             </fieldset>
+            <br>
+            <fieldset>
+                <label for="senha">Senha (deixe em branco para não alterar) </label>
+                <input type="password" name="senha" id="senha" class="form-control">
+            </fieldset>       
 
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit">Atualizar</button>
-            <input type="hidden" name="id" value="<?= $dadosAtuais['ambiente_id'] ?>">
+            <input type="hidden" name="id" value="<?= $dadosAtuais['usuario_id'] ?>">
         </form>
     </div>
 </div>
