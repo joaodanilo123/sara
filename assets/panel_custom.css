@@ -22,3 +22,7 @@ figure img {
     max-height: 300px;
     max-width: 300px;
 }
+
+fieldset {
+    padding-top: 5%;
+}
