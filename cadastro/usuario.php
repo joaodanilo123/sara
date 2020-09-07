@@ -16,15 +16,15 @@
 
             <div class="custom-control custom-radio">
                 <input id="professor" name="tipou" type="radio" class="custom-control-input" value="professor" required onclick="changeTokenField()">
-                <label class="custom-control-label" for="prof">Professor</label>
+                <label class="custom-control-label" for="professor">Professor</label>
             </div>
             <div class="custom-control custom-radio">
                 <input id="admin" name="tipou" type="radio" class="custom-control-input" value="admin" required onclick="changeTokenField()">
-                <label class="custom-control-label" for="adm">Administrador</label>
+                <label class="custom-control-label" for="admin">Administrador</label>
             </div>
             <div class="custom-control custom-radio">
                 <input id="agente" name="tipou" type="radio" class="custom-control-input" value="agente" required onclick="changeTokenField()">
-                <label class="custom-control-label" for="ap">Agente de Portaria</label>
+                <label class="custom-control-label" for="agente">Agente de Portaria</label>
             </div>
 
         </fieldset>
