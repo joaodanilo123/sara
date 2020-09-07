@@ -33,7 +33,7 @@ async function loadUserEditForm(id) {
         }
     }
 
-    req.open('GET', `../editar/usuario.php?id=${id}`, true);
+    req.open('GET', `../editar/usuario.php?usuario=${id}`, true);
     req.send();
 }
 
@@ -159,4 +159,13 @@ async function loadReserves() {
     });
 
     calendar.render();
+}
+
+function changeTokenField(){
+    if(document.getElementById('professor').checked){
+        document.getElementById('token').disabled = false;
+    } else {
+        document.getElementById('token').disabled = true;
+    }
+    
 }
