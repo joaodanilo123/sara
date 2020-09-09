@@ -59,7 +59,7 @@ require_once '../utils/verificarSessao.php';
             </li>
             <li class='nav-item'>
                 <a class='nav-link' onclick="loadSearch()">
-                    <i class='fas fa-fw'>📅</i>
+                    <i class='fas fa-fw'>🔎</i>
                     <span>Buscar reservas</span>
                 </a>
             </li>
