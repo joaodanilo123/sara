@@ -1,6 +1,8 @@
 <?php
-require '../config/conexao.php';
+
 session_start();
+
+require '../utils/verificarSessao.php';
 
 $params = ['professor', 'ambiente', 'inicio', 'fim', 'color'];
 $valid_request = true;
@@ -13,6 +15,9 @@ foreach ($params as $p) {
 }
 
 if ($valid_request) {
+
+    require '../config/conexao.php';
+
     $id = uniqid();
     $prof = $_POST['professor'];
     $amb = $_POST['ambiente'];
@@ -22,7 +27,7 @@ if ($valid_request) {
     $cor = $_POST['color'];
 
 
-    $sql = "INSERT INTO reserva(reserva_id, ambiente_id, reservista_id, agente_id, reserva_inicio, reserva_fim, reserva_cor) VALUES
+    $sql = "INSERT INTO reserva(reserva_id, ambiente_id, reservista_id, agente_id, reserva_inicio, reserva_fim, reserva_cor, reserva_ativa) VALUES
         (
             '$id', 
             '$amb',
@@ -30,7 +35,8 @@ if ($valid_request) {
             '$agente',
             '$i',
             '$f',
-            '$cor'
+            '$cor',
+            '1'
         )
     ";
 
