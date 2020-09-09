@@ -26,4 +26,8 @@ $data = $connection->query($sql)->fetch_assoc();
         <th>Tipo de usuário</th>
         <td><?=$data['hierarquia_nome']?></td>
     </tr>
+    <tr>
+        <th>Token</th>
+        <td><?=$data['usuario_token']?></td>
+    </tr>
 </table>
