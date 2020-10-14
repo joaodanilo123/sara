@@ -3,6 +3,8 @@
 session_start();
 require_once '../utils/verificarSessao.php';
 
+$messages = isset($_GET['messages']) ? $_GET['messages'] : [];
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -72,7 +74,12 @@ require_once '../utils/verificarSessao.php';
                     <div class="card-header" id="content-name">
                         <figure>
                             <img src="../assets/SARA.png" alt="logotipo sara">
-                            <figcaption><b>Selecione uma opção ao lado</b></figcaption>
+                            <figcaption>
+                                <b>Selecione uma opção ao lado</b>
+                                <?php foreach($messages as $m){
+                                    echo $m.'<br>';
+                                }?>
+                            </figcaption>
                         </figure>
                     </div>
                     <div class="card-body" id="indextable">
@@ -102,6 +109,7 @@ require_once '../utils/verificarSessao.php';
     <script src='../dependencias/js/demo/chart-area-demo.js'></script>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/panel_common.js"></script>
     <script src="../assets/panel_agente.js"></script>
 </body>
 

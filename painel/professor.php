@@ -12,23 +12,19 @@ $messages = isset($_GET['messages']) ? $_GET['messages'] : [];
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Menu Principal - Professor</title>
-
-    <link href="../dependencias/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-    <!-- Page level plugin CSS-->
-    <link href="../dependencias/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/panel_custom.css">
-    <!-- Custom styles for this template-->
-    <link href="../dependencias/css/sb-admin.css" rel="stylesheet">
     <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/core/main.min.css">
     <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/daygrid/main.min.css">
     <link rel="stylesheet" href="../dependencias/fullcalendar-4.1.0/packages/timegrid/main.min.css">
     <script src="../dependencias/fullcalendar-4.1.0/packages/core/main.min.js"></script>
+    <script src="../dependencias/fullcalendar-4.1.0/packages/interaction/main.min.js"></script>
     <script src="../dependencias/fullcalendar-4.1.0/packages/daygrid/main.min.js"></script>
     <script src="../dependencias/fullcalendar-4.1.0/packages/timegrid/main.min.js"></script>
     <script src="../dependencias/fullcalendar-4.1.0/packages/core/locales/pt-br.js"></script>
+    <link href="../dependencias/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../dependencias/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="../dependencias/css/sb-admin.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/panel_custom.css">
+    <title>Menu Principal - Professor</title>
 
 </head>
 
@@ -43,7 +39,7 @@ $messages = isset($_GET['messages']) ? $_GET['messages'] : [];
 
         <ul class='navbar-nav ml-auto ml-md-0'>
             <li class='nav-item dropdown no-arrow'>
-                <a href='logout.php'><button type='button' class='btn btn-outline-light'>Logout</button></a>
+                <a href='../actions/logout.php'><button type='button' class='btn btn-outline-light'>Logout</button></a>
                 </div>
             </li>
         </ul>
@@ -54,14 +50,14 @@ $messages = isset($_GET['messages']) ? $_GET['messages'] : [];
 
         <ul class='sidebar navbar-nav'>
             <li class='nav-item'>
-                <a class='nav-link' href='indexprof.php'>
+                <a class='nav-link' href="#" onclick='loadReserveForm()'>
                     <i class='fas fa-fw'>📅</i>
                     <span>Requisitar reserva</span>
                 </a>
             </li>
 
             <li class='nav-item'>
-                <a class='nav-link' href='mrprof.php'>
+                <a class='nav-link' href="#" onclick="loadSearch('todos', '<?= $_SESSION['nome'] ?>')">
                     <i class='fas fa-fw'>🗂️</i>
                     <span>Minhas Reservas</span>
                 </a>

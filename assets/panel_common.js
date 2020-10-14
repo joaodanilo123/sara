@@ -40,7 +40,12 @@ async function loadReserves() {
 
     const eventsURL = `../actions/listar_reservas.php?ambiente=${env}&prof=${rvt}&agente=${agt}`
 
-    data = await fetch(eventsURL);
+    const reserves = await getEvents(eventsURL) || [];
+
+    let events = [];
+    reserves.forEach(reserve => {
+        events.push(reserve.event)
+    });
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'pt-br',
@@ -48,8 +53,29 @@ async function loadReserves() {
         defaultView: 'timeGridWeek',
         minTime: "07:45:00",
         maxTime: "22:30:00",
-        events: eventsURL,
+        events: events,
+        eventClick: info => {
+            reserve = reserves.find(r => r.id == info.event.id)
+
+            alert(`${reserve.descricao}\n${reserve.prof}\n${reserve.ambiente}`)
+        }
     });
 
     calendar.render();
+}
+
+function formatDate(date) {
+    date = new Date(date).toLocaleString();
+    const D = date.slice(0, 2);
+    const M = date.slice(3, 5);
+    const Y = date.slice(6, 10);
+    const h = date.slice(11, 13);
+    const m = date.slice(14, 16);
+    return `${Y}-${M}-${D}T${h}:${m}`;
+}
+
+async function getEvents(url){
+    return fetch(url)
+        .then(res => res.json())
+        .then(data => data)
 }

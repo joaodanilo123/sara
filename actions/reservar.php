@@ -4,7 +4,7 @@ session_start();
 
 require '../utils/verificarSessao.php';
 
-$params = ['professor', 'ambiente', 'inicio', 'fim', 'color'];
+$params = ['professor', 'ambiente', 'inicio', 'fim', 'color', 'descricao'];
 $valid_request = true;
 
 foreach ($params as $p) {
@@ -25,9 +25,9 @@ if ($valid_request) {
     $i = $_POST['inicio'];
     $f = $_POST['fim'];
     $cor = $_POST['color'];
+    $descricao = $_POST['descricao'];
 
-
-    $sql = "INSERT INTO reserva(reserva_id, ambiente_id, reservista_id, agente_id, reserva_inicio, reserva_fim, reserva_cor, reserva_ativa) VALUES
+    $sql = "INSERT INTO reserva(reserva_id, ambiente_id, reservista_id, agente_id, reserva_inicio, reserva_fim, reserva_cor, reserva_ativa, reserva_descricao) VALUES
         (
             '$id', 
             '$amb',
@@ -36,7 +36,8 @@ if ($valid_request) {
             '$i',
             '$f',
             '$cor',
-            '1'
+            '1',
+            '$descricao'
         )
     ";
 

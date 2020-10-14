@@ -3,10 +3,15 @@
 session_start();
 
 require '../utils/verificarSessao.php';
-
-$messages = [];
+require '../utils/buildUrl.php';
+require '../utils/validateParams.php';
+require '../utils/validateEmail.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $messages = [];
+    $params = ['nome', 'id', 'hierarquia'];
+
     $nome = $_POST['nome'];
     $email = $_POST['email'];
     $hierarquia = $_POST['hierarquia'];
@@ -14,62 +19,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $senha = $_POST['senha'];
     $id = $_POST['id'];
 
-    if (validateParams()) {
+    $paramsValid = validateParams($params, $_POST, true);
+    $emailValid = validateEmail($email);
+    $tokenValid = validateToken($token, $hierarquia);
+
+    if (!$emailValid) array_push($messages, 'Email inválido');
+    if (!$tokenValid) array_push($messages, 'Token inválido');
+
+    if ($paramsValid and $emailValid and $tokenValid) {
 
         $sql = buildSql();
-        echo $sql;
         executeUpdate($sql);
-        header(buildUrl());
+        header(buildUrl($messages));
 
     } else {
-        header(buildUrl());
+        header(buildUrl($messages));
         exit();
     }
 }
 
 
-function validateParams()
+function validateToken($token, $hierarquia)
 {
-
-    global $nome, $token, $id, $hierarquia, $email;
-    global $messages;
-
-    $valid = true;
-
-    if (empty($nome)) {
-        array_push($messages, 'Nome inválido');
-        $valid = false;
-    }
-
-    if (empty($email) or !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        array_push($messages, 'email inválido');
-        $valid = false;
-    }
-
-    if (empty($hierarquia)) {
-        array_push($messages, 'Tipo de usuário inválido');
-        $valid = false;
-    }
-
-    if (empty($token) and $hierarquia == 'professor') {
-        array_push($messages, 'Token inválido');
-        $valid = false;
-    }
-
-    if (empty($id)) {
-        array_push($messages, 'Usuário não existe');
-        $valid = false;
-    }
-
-    return $valid;
-}
-
-function buildUrl()
-{
-    global $messages;
-    $messagesUrl = http_build_query(array('messages' => $messages));
-    $url = "location: ../painel/admin.php?$messagesUrl";
-    return $url;
+    return !empty($token) and $hierarquia == 'professor';
 }
 
 function buildSql()

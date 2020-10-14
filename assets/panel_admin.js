@@ -146,15 +146,32 @@ async function loadReserves() {
 
     const eventsURL = `../actions/listar_reservas.php?ambiente=${env}&prof=${rvt}&agente=${agt}`
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    const reserves = await getEvents(eventsURL) || [];
+
+    let events = [];
+    reserves.forEach(reserve => {
+        events.push(reserve.event)
+    });
+
+    calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'pt-br',
         plugins: ['timeGrid'],
         defaultView: 'timeGridWeek',
         minTime: "07:45:00",
         maxTime: "22:30:00",
-        events: eventsURL,
-        eventClick: function (info) {
-            alert('Event: ' + info.event.title);
+        events: events,
+        eventClick: async info => {
+            eventID = info.event.id;
+            currentEvent = calendar.getEventById(eventID);
+            if(info.event.backgroundColor == '#bcbcbc'){
+                if(confirm("Confimar reserva?")){
+                    confirmation = await confirmReserve(eventID);
+                    if(confirmation.ok == 1){
+                        alert('Reserva confirmada.');
+                        currentEvent.setProp('backgroundColor', confirmation.color)
+                    }
+                }
+            }
         }
     });
 
@@ -168,4 +185,10 @@ function changeTokenField(){
         document.getElementById('token').disabled = true;
     }
     
+}
+
+async function getEvents(url){
+    return fetch(url)
+        .then(res => res.json())
+        .then(data => data)
 }
