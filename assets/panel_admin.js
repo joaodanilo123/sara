@@ -1,108 +1,49 @@
 async function loadUsers() {
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-        if (this.status == 200 && this.readyState == 4) {
-            document.getElementById('indextable').innerHTML = req.responseText;
-            document.getElementById('content-name').innerText = '👥 Usuários';
-        }
-    }
-
-    req.open('GET', '../actions/listar_usuarios.php', true);
-    req.send();
+    requestContent(`/actions/listar_usuarios.php`).then(content => {
+        changeContent(content, '👥 Usuários');
+    });
 }
 
 async function loadUserRegisterForm() {
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-        if (this.status == 200 && this.readyState == 4) {
-            document.getElementById('indextable').innerHTML = req.responseText;
-            document.getElementById('content-name').innerText = '👥 Cadastrar Usuário';
-        }
-    }
-
-    req.open('GET', '../cadastro/usuario.php', true);
-    req.send();
+    requestContent(`/cadastro/usuario.php`).then(content => {
+        changeContent(content, '👥 Cadastrar Usuário');
+    });
 }
 
-async function loadUserEditForm(id) {
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-        if (this.status == 200 && this.readyState == 4) {
-            document.getElementById('indextable').innerHTML = req.responseText;
-            document.getElementById('content-name').innerText = '👥 Editar Usuário';
-        }
-    }
-
-    req.open('GET', `../editar/usuario.php?usuario=${id}`, true);
-    req.send();
+async function loadUserEditForm(userId) {
+    requestContent(`/editar/usuario.php?usuario=${userId}`).then(content => {
+        changeContent(content, '👥 Editar Usuário');
+    });
 }
 
 async function loadEnvs() {
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-        if (this.status == 200 && this.readyState == 4) {
-            document.getElementById('indextable').innerHTML = req.responseText;
-            document.getElementById('content-name').innerText = '🚪 Ambientes';
-        }
-    }
-
-    req.open('GET', '../actions/listar_ambientes.php', true);
-    req.send();
+    requestContent(`/actions/listar_ambientes.php`).then(content => {
+        changeContent(content, '🚪 Ambientes');
+    });
 }
 
 async function loadEnvRegisterForm() {
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-        if (this.status == 200 && this.readyState == 4) {
-            document.getElementById('indextable').innerHTML = req.responseText;
-            document.getElementById('content-name').innerText = '🚪 Cadastrar Ambiente';
-        }
-    }
-
-    req.open('GET', '../cadastro/ambiente.php', true);
-    req.send();
+    requestContent(`/cadastro/ambiente.php`).then(content => {
+        changeContent(content, '🚪 Novo Ambiente');
+    });
 }
 
 async function loadEnvEditForm(ambienteId) {
-    const params = new URLSearchParams();
-
-    const instance = axios.create({
-        baseURL: 'http://localhost/sara/editar',
+    requestContent(`/editar/ambiente.php?ambiente=${ambienteId}`).then(content => {
+        changeContent(content, '🚪 Editar Ambiente');
     });
-
-    try {
-        const response = await instance.get(`/ambiente.php?ambiente=${ambienteId}`)
-        document.getElementById('indextable').innerHTML = response.data;
-        document.getElementById('content-name').innerText = '🚪 Editar Ambiente';
-    } catch (error) {
-
-    }
 }
 
-function loadBuildings() {
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-        if (this.status == 200 && this.readyState == 4) {
-            document.getElementById('indextable').innerHTML = req.responseText;
-            document.getElementById('content-name').innerText = '🏢 Prédios';
-        }
-    }
-
-    req.open('GET', '../actions/listar_predios.php', true);
-    req.send();
+async function loadBuildings() {
+    requestContent(`/actions/listar_predios.php`).then(content => {
+        changeContent(content, '🏢 Prédios');
+    });
 }
 
 function loadBuildingRegisterForm() {
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-        if (this.status == 200 && this.readyState == 4) {
-            document.getElementById('indextable').innerHTML = req.responseText;
-            document.getElementById('content-name').innerText = '🏢 Cadastrar Prédio';
-        }
-    }
-
-    req.open('GET', '../cadastro/predio.php', true);
-    req.send();
+    requestContent(`/cadastro/predio.php`).then(content => {
+        changeContent(content, '🏢 Cadastrar Prédio');
+    });
 }
 
 function loadBuildingEditForm() {
@@ -110,29 +51,9 @@ function loadBuildingEditForm() {
 }
 
 function loadBuildingEnvs(predioId) {
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-        if (this.status == 200 && this.readyState == 4) {
-            document.getElementById('indextable').innerHTML = req.responseText;
-            document.getElementById('content-name').innerText = '🚪 Ambientes';
-        }
-    }
-
-    req.open('GET', `../actions/listar_ambientes.php?predio=${predioId}`, true);
-    req.send();
-}
-
-function loadSearch(env = 'todos', prof = 'todos', agente = 'todos') {
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-        if (this.status == 200 && this.readyState == 4) {
-            document.getElementById('indextable').innerHTML = req.responseText;
-            document.getElementById('content-name').innerText = '📅 Buscar reservas';
-        }
-    }
-
-    req.open('GET', `../actions/filtrar_reservas.php?ambiente=${env}&agente=${agente}&prof=${prof}`, true);
-    req.send();
+    requestContent(`/actions/listar_ambientes.php?predio=${predioId}`).then(content => {
+        changeContent(content, '🚪 Ambientes');
+    });
 }
 
 async function loadReserves() {
@@ -140,18 +61,12 @@ async function loadReserves() {
     const rvt = document.getElementById('reservista').value;
     const agt = document.getElementById('agente').value;
 
-
     var calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML = "";
 
     const eventsURL = `../actions/listar_reservas.php?ambiente=${env}&prof=${rvt}&agente=${agt}`
 
-    const reserves = await getEvents(eventsURL) || [];
-
-    let events = [];
-    reserves.forEach(reserve => {
-        events.push(reserve.event)
-    });
+    const events = await getEvents(eventsURL) || [];
 
     calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'pt-br',
@@ -161,33 +76,20 @@ async function loadReserves() {
         maxTime: "22:30:00",
         events: events,
         eventClick: async info => {
-            eventID = info.event.id;
-            currentEvent = calendar.getEventById(eventID);
-            if(info.event.backgroundColor == '#bcbcbc'){
-                if(confirm("Confimar reserva?")){
-                    confirmation = await confirmReserve(eventID);
-                    if(confirmation.ok == 1){
-                        alert('Reserva confirmada.');
-                        currentEvent.setProp('backgroundColor', confirmation.color)
-                    }
-                }
-            }
+            alert(info.event.extendedProps.descricao); 
         }
     });
 
     calendar.render();
 }
 
-function changeTokenField(){
-    if(document.getElementById('professor').checked){
-        document.getElementById('token').disabled = false;
-    } else {
-        document.getElementById('token').disabled = true;
-    }
-    
+function changeTokenField() {
+    const tokenField = document.getElementById('token');
+    const profFieldChecked = document.getElementById('professor').checked;
+    tokenField.disabled = !profFieldChecked ? true : false;
 }
 
-async function getEvents(url){
+async function getEvents(url) {
     return fetch(url)
         .then(res => res.json())
         .then(data => data)

@@ -3,7 +3,7 @@
 require "../config/conexao.php";
 
 
-$user = $_POST['id'];
+$user = $_GET['id'];
 
 $sql = "SELECT * FROM usuario WHERE usuario_id = '$user'";
 $data = $connection->query($sql)->fetch_assoc();

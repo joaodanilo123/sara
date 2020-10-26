@@ -58,12 +58,7 @@ async function loadReserves() {
 
     const eventsURL = `../actions/listar_reservas.php?ambiente=${env}&prof=${rvt}&agente=${agt}`
 
-    const reserves = await getEvents(eventsURL) || [];
-
-    let events = [];
-    reserves.forEach(reserve => {
-        events.push(reserve.event)
-    });
+    const events = await getEvents(eventsURL) || [];
 
     calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'pt-br',
@@ -73,14 +68,15 @@ async function loadReserves() {
         maxTime: "22:30:00",
         events: events,
         eventClick: async info => {
-            eventID = info.event.id;
-            currentEvent = calendar.getEventById(eventID);
+            
+            alert(`Descrição: ${info.event.extendedProps.descricao}`)
+
             if(info.event.backgroundColor == '#bcbcbc'){
-                if(confirm("Confimar reserva?")){
-                    confirmation = await confirmReserve(eventID);
+                if(confirm(`Confimar reserva?`)){
+                    confirmation = await confirmReserve(info.event.id);
                     if(confirmation.ok == 1){
                         alert('Reserva confirmada.');
-                        currentEvent.setProp('backgroundColor', confirmation.color)
+                        info.event.setProp('backgroundColor', confirmation.color)
                     }
                 }
             }

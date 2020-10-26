@@ -35,22 +35,17 @@ while($row = $result->fetch_assoc()){
     $descricao = $row['reserva_descricao'];
 
     if($row['reserva_ativa'] == '0') $cor = '#bcbcbc';
-
-    $dadosEvento = [
-        'id' => $id,
-        'title' => "{$prof}\n{$ambiente}",
-        'end' => $fim,
-        'start' => $inicio,
-        'color' => $cor,
-    ];
-
+    
     $eventos[] = [
         'id' => $id,
         'prof' => $prof,
         'agente' => $agente,
         'ambiente' => $ambiente,
         'descricao' => $descricao,
-        'event' => $dadosEvento 
+        'title' => "{$prof}\n{$ambiente}",
+        'end' => $fim,
+        'start' => $inicio,
+        'color' => $cor,
     ];
 }
 

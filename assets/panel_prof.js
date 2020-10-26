@@ -1,18 +1,39 @@
 function loadReserveForm(_ambiente = false) {
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-        if (this.status == 200 && this.readyState == 4) {
-            document.getElementById('indextable').innerHTML = req.responseText;
-            document.getElementById('content-name').innerText = '📅 Nova reserva';
-            if (_ambiente){
-                loadReserveFormCalendar(_ambiente)
-            }
+    requestContent(`/cadastro/requisicao.php`).then(content => {
+        changeContent(content, '📅 Buscar reservas');
+        if (_ambiente){
+            loadReserveFormCalendar(_ambiente);
         }
-    }
+    });
+}
 
-    req.open('GET', `../cadastro/requisicao.php`, true );
-    req.send();
+async function loadReserves() {
+    const env = document.getElementById('ambiente').value;
+    const rvt = document.getElementById('reservista').value;
+    const agt = document.getElementById('agente').value;
 
+
+    var calendarEl = document.getElementById('calendar');
+    calendarEl.innerHTML = "";
+
+    const eventsURL = `../actions/listar_reservas.php?ambiente=${env}&prof=${rvt}&agente=${agt}`
+
+    const events = await getEvents(eventsURL) || [];
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'pt-br',
+        plugins: ['timeGrid'],
+        defaultView: 'timeGridWeek',
+        minTime: "07:45:00",
+        maxTime: "22:30:00",
+        events: events,
+        eventClick: info => {
+            const reserve = info.event.extendedProps;
+            alert(`${reserve.descricao}\n${reserve.prof}\n${reserve.ambiente}`)
+        }
+    });
+
+    calendar.render();
 }
 
 var storedEnv;
@@ -47,22 +68,6 @@ async function loadReserveFormCalendar(_ambiente = false) {
     });
 
     calendar.render();
-}
-
-async function loadAmbiData(id) {
-    const params = new URLSearchParams();
-    params.append('id', id);
-
-    const instance = axios.create({
-        baseURL: 'http://localhost/sara/actions',
-    });
-
-    const response = await instance.post('/dados_usuario.php', params)
-
-    if (response.status === 200) {
-        document.getElementById('indextable').innerHTML = response.data;
-        document.getElementById('content-name').innerText = 'Dados do usuário';
-    }
 }
 
 

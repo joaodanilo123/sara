@@ -129,6 +129,7 @@ $messages = isset($_GET['messages']) ? $_GET['messages'] : [];
     <script src='../dependencias/js/demo/datatables-demo.js'></script>
     <script src='../dependencias/js/demo/chart-area-demo.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/panel_common.js"></script>
     <script src="../assets/panel_admin.js"></script>
 </body>
 
