@@ -105,10 +105,12 @@ CREATE TABLE `reserva` (
   `reserva_id` char(13) NOT NULL,
   `ambiente_id` char(13) NOT NULL,
   `reservista_id` char(13) NOT NULL,
-  `agente_id` char(13) NOT NULL,
+  `agente_id` char(13) DEFAULT NULL,
   `reserva_inicio` datetime NOT NULL,
   `reserva_fim` datetime NOT NULL,
   `reserva_cor` varchar(10) NOT NULL,
+  `reserva_ativa` tinyint NOT NULL,
+  `reserva_descricao` varchar(100) NOT NULL,
   PRIMARY KEY (`reserva_id`),
   KEY `ambiente_fk` (`ambiente_id`),
   KEY `reservista_fk` (`reservista_id`),
@@ -125,7 +127,7 @@ CREATE TABLE `reserva` (
 
 LOCK TABLES `reserva` WRITE;
 /*!40000 ALTER TABLE `reserva` DISABLE KEYS */;
-INSERT INTO `reserva` VALUES ('1234567891234','5ee3bf9c20e64','5ee378e59e95d','gfed34567123','2020-06-24 15:51:51','2020-06-24 18:50:19','#0373fc'),('5efd0e98b4698','5ee11b4721c7c','5ee378e59e95d','5ee37ae176a04','2020-07-01 14:29:00','2020-07-01 16:29:00','#40E0D0'),('5efd0f31eaafd','5ee3bfdebfc8f','5ef161491fa97','5ee37ae176a04','2020-07-01 13:33:00','2020-07-01 13:33:00','#0071c5'),('5f2d4cd249c62','5ee3bfdebfc8f','5ef161491fa97','5ee37ae176a04','2020-08-07 09:42:00','2020-08-07 21:42:00','#436EEE'),('5f2d4eef83a12','5ee3bfdebfc8f','5ee378e59e95d','5ee37ae176a04','2020-08-07 09:53:00','2020-08-07 20:53:00','#0071c5'),('5f3ab2d4cb60b','5ee3bfbab41a0','5ef161491fa97','5ee37ae176a04','2020-08-21 13:39:00','2020-08-21 13:39:00','#436EEE'),('5f3dd82d23035','5ee3bfbab41a0','5ee378e59e95d','5ee37ae176a04','2020-08-19 08:15:00','2020-08-19 09:15:00','#FF4500'),('5f3dda14db11c','5ee3bfcd1f61c','5f10eb46813c8','5ee37ae176a04','2020-08-18 08:45:00','2020-08-18 11:45:00','#0071c5'),('5f3ddcfbc96ba','5ee3bfcd1f61c','5ef161491fa97','5ee37ae176a04','2020-08-19 10:45:00','2020-08-19 11:45:00','#8B4513'),('5f3ddd1274df8','5ee3bfcd1f61c','5ee378e59e95d','5ee37ae176a04','2020-08-19 13:15:00','2020-08-19 15:15:00','#40E0D0'),('5f3ddd2326ec5','5ee3bfcd1f61c','5ef161491fa97','5ee37ae176a04','2020-08-20 15:15:00','2020-08-20 16:45:00','#8B0000'),('5f3ddd5c1a981','5ee3bfcd1f61c','5ef161491fa97','5ee37ae176a04','2020-08-20 10:15:00','2020-08-20 11:45:00','#436EEE'),('5f3ec44078e11','5ee3bfbab41a0','5ee378e59e95d','5ee37ae176a04','2020-08-17 09:45:00','2020-08-17 10:45:00','#FF4500'),('5f3ec5704b969','5ee3bfbab41a0','5ef161491fa97','5ee37ae176a04','2020-08-19 10:45:00','2020-08-19 11:45:00','#0071c5'),('5f3ec67d761f6','5ee3bfbab41a0','5f10eb46813c8','5ee37ae176a04','2020-08-20 09:45:00','2020-08-20 11:15:00','#0071c5'),('5f3ec6a530ae7','5ee3bfbab41a0','5ef161491fa97','5ee37ae176a04','2020-08-20 11:15:00','2020-08-20 12:15:00','#0071c5'),('5f3ec6d80302a','5ee3bfcd1f61c','5ee378e59e95d','5ee37ae176a04','2020-08-21 11:15:00','2020-08-21 13:15:00','#FF4500'),('5f3ec70e99424','5ee3bfcd1f61c','5ee378e59e95d','5ee37ae176a04','2020-08-20 11:45:00','2020-08-20 12:45:00','#228B22'),('5f3ecc4d7d748','5ee3bfbab41a0','5ee378e59e95d','5ee37ae176a04','2020-08-20 13:45:00','2020-08-20 14:45:00','#0071c5'),('5f3ed1afdfdb0','5ee3bfbab41a0','5ef161491fa97','5ee37ae176a04','2020-08-18 14:15:00','2020-08-18 15:45:00','#FF4500'),('5f3ed1fc6f85c','5ee3bfcd1f61c','5ee378e59e95d','5ee37ae176a04','2020-08-18 12:45:00','2020-08-18 14:45:00','#1C1C1C'),('5f3f1869a88ed','5ee3bfbab41a0','5ef161491fa97','5ee37ae176a04','2020-08-20 15:15:00','2020-08-20 17:15:00','#228B22'),('5f3f187867081','5ee3bfbab41a0','5f10eb46813c8','5ee37ae176a04','2020-08-21 15:45:00','2020-08-21 19:45:00','#8B4513');
+INSERT INTO `reserva` VALUES ('5f71ceedb196f','5ee3bfbab41a0','5ee378e59e95d','5ee37ae176a04','2020-09-28 08:45:00','2020-09-28 10:15:00','#228B22',1,'Aula de Programação'),('5f71d73ae6dcd','5ee3bfbab41a0','5ee378e59e95d','5ee37ae176a04','2020-09-28 15:15:00','2020-09-28 16:45:00','#FF4500',1,'Aula'),('5f86501f70c6f','5ee3bfbab41a0','5ee378e59e95d','5ee37ae176a04','2020-10-13 08:45:00','2020-10-13 11:15:00','#FF4500',1,'aULA KKKKK NEM TEm AGORA É SO ON THE LINE'),('5f8aedad68a41','5ee3bfbab41a0','5ee378e59e95d','5ee37ae176a04','2020-10-14 10:15:00','2020-10-14 12:45:00','#8B4513',1,'dklfjsdkfjsdk'),('5f8aee9c0d8e8','5ee3bfbab41a0','5ee378e59e95d',NULL,'2020-10-20 08:45:00','2020-10-20 13:15:00','#0071c5',0,'bablabla');
 /*!40000 ALTER TABLE `reserva` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,7 +182,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('5ee378e59e95d','Bruno Batista Boniati','bruno@gmail.com','e10adc3949ba59abbe56e057f20f883e','professor','0003260990'),('5ee3795321ace','Maria de Lourdes','maria@gmail.com','e10adc3949ba59abbe56e057f20f883e','agente','0000000000'),('5ee3798ed3251','Jonas Tadeu','jonas@gmail.com','e10adc3949ba59abbe56e057f20f883e','admin','0000000000'),('5ee37ae176a04','Ana Maria Braga','ana@globo.com','e10adc3949ba59abbe56e057f20f883e','agente','0000000000'),('5ef161491fa97','Mateus Henrique Dalforno','mateus.dalforno@iffarroupilha.edu.br','e10adc3949ba59abbe56e057f20f883e','professor','0003251430'),('5f10eb46813c8','Rodrigo Poglia','rodrigo@gmail.com','e10adc3949ba59abbe56e057f20f883e','professor','0003217003'),('5f5667472ab35','Kleiton Silva Prado','ff@gmail.com','e10adc3949ba59abbe56e057f20f883e','professor','0003275553'),('gfed34567123','João Danilo Zucolotto','jddiedrich@gmail.com','202cb962ac59075b964b07152d234b70','admin','0000000000');
+INSERT INTO `usuario` VALUES ('5ee378e59e95d','Bruno Batista Boniati','bruno@gmail.com','e10adc3949ba59abbe56e057f20f883e','professor','0003260990'),('5ee3795321ace','Maria de Lourdes','maria@gmail.com','e10adc3949ba59abbe56e057f20f883e','agente','0000000000'),('5ee3798ed3251','Jonas Tadeu','jonas@gmail.com','e10adc3949ba59abbe56e057f20f883e','admin','0000000000'),('5ee37ae176a04','Ana Maria Braga','ana@globo.com','e10adc3949ba59abbe56e057f20f883e','agente','0000000000'),('5ef161491fa97','Mateus Henrique Dalforno','mateus.dalforno@iffarroupilha.edu.br','e10adc3949ba59abbe56e057f20f883e','professor','0003251430'),('5f10eb46813c8','Rodrigo Poglia','rodrigo@gmail.com','e10adc3949ba59abbe56e057f20f883e','professor','0003217003'),('5f5667472ab35','Kleiton Silva Prs','f123@gmail.com','e10adc3949ba59abbe56e057f20f883e','professor','0003275553'),('gfed34567123','João Danilo Zucolotto','jddiedrich@gmail.com','202cb962ac59075b964b07152d234b70','admin','0000000000');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -193,4 +195,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-07 16:27:00
+-- Dump completed on 2020-11-03  8:26:35
