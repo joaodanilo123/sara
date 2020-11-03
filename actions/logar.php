@@ -1,28 +1,32 @@
 <?php
 include "../config/conexao.php";
 
-$email = mysqli_escape_string($connection, $_POST['email']);
-$senha = md5(mysqli_escape_string($connection, $_POST['senha']));
+$email = $_POST['email'];
+$password = md5($_POST['senha']);
 $submit_button = $_POST['submit_button'];
 
 if (isset($submit_button)) {
 
-    $query = "SELECT * FROM usuario WHERE usuario_email = '$email' AND usuario_senha = '$senha'";
-    $result = $connection->query($query) or die($connection->error);
+    $query = $connection->prepare("SELECT * FROM usuario WHERE usuario_email = :email AND usuario_senha = :pwd");
+    $query->bindParam(':email', $email);
+    $query->bindParam(':pwd', $password);
+    $query->setFetchMode(PDO::FETCH_ASSOC);
+    $query->execute();
 
-    if ($result->num_rows <= 0) {
+    $result = $query->fetch();
+    
+    if ($query->rowCount() <= 0) {
         header('Location: ../login.php');;
         die("erro");
     } else {
-        $dados = $result->fetch_assoc();
 
         session_start();
-        $_SESSION['email'] = $dados['usuario_email'];
-        $_SESSION['id'] = $dados['usuario_id'];
-        $_SESSION['nome'] = $dados['usuario_nome'];
-        $_SESSION['hierarquia'] = $dados['hierarquia_nome'];
+        $_SESSION['email'] = $result['usuario_email'];
+        $_SESSION['id'] = $result['usuario_id'];
+        $_SESSION['nome'] = $result['usuario_nome'];
+        $_SESSION['hierarquia'] = $result['hierarquia_nome'];
 
-        switch ($dados['hierarquia_nome']) {
+        switch ($result['hierarquia_nome']) {
             case 'admin':
                 header('Location: ../painel/admin.php');
                 break;

@@ -3,9 +3,9 @@
 include '../config/conexao.php';
 
 $sql = "SELECT * FROM ambiente ";
-$sql .= isset($_GET['predio']) ? "WHERE predio_id='{$_GET['predio']}' " : '';
+$sql .= isset($_GET['predio']) ? "WHERE predio_id=:predio_id " : '';
 $sql .= 'ORDER BY ambiente_ativo DESC';
-$result = $connection->query($sql);
+$query = $connection->query($sql);
 
 function carregar_nomes_predios($predio_id){
     global $connection;
