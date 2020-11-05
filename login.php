@@ -30,7 +30,12 @@ session_destroy();
     <label for="senha" class="sr-only">Senha</label>
     <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required>
     <button class="btn btn-lg btn-primary btn-block" type="submit" id="entrar" name="submit_button">Acessar</button>
+    <?php if(isset($_GET['erro'])): ?>
+      <div class="bg-danger">Usuário ou senha incorretos</div>
+    <?php endif ?>
   </form>
+
+  
 
   <script src="./dependencias/jquery/dist/jquery.js"></script>
   <script src="./dependencias/popper.js/dist/umd/popper.js"></script>

@@ -3,19 +3,8 @@
 session_start();
 require '../config/conexao.php';
 
-function carregar_ambientes(mysqli $conn)
-{
-    $sql = "SELECT ambiente_nome, ambiente_id FROM ambiente WHERE ambiente_ativo='sim'";
-    $query = $conn->query($sql);
-    $result = array();
-    while ($row = $query->fetch_assoc()) {
-        array_push($result, $row);
-    }
-
-    return $result;
-}
-
-$ad = carregar_ambientes($connection);
+$query = $connection->query("SELECT ambiente_nome, ambiente_id FROM ambiente WHERE ambiente_ativo='sim'");
+$ad = $query->fetchAll();
 
 ?>
 <form action="../actions/requisitar.php" method="post">

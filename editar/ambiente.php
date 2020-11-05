@@ -4,21 +4,21 @@ include '../config/conexao.php';
 
 $id = $_GET['ambiente'];
 
-$dadosAtuais = $connection->query("SELECT * FROM ambiente WHERE ambiente_id='$id'")->fetch_assoc();
+try {
+    $sql = "SELECT * FROM ambiente WHERE ambiente_id= ? ";
+    $query = $connection->prepare($sql);
+    $query->execute([$id]);
+    $dadosAtuais = $query->fetch();
 
-$query = $connection->query('SELECT * FROM tipo_ambiente');
-$tipos_ambiente = array();
-while ($row = $query->fetch_assoc()) {
-    array_push($tipos_ambiente, $row);
+    $tipos_ambiente = $connection->query('SELECT * FROM tipo_ambiente')->fetchAll();
+    $predios = $connection->query('SELECT * FROM predio')->fetchAll();
+
+    $connection = null;
+
+} catch (PDOException $e) {
+    echo $e->getMessage();
+    exit();
 }
-
-$query = $connection->query('SELECT * FROM predio');
-$predios = array();
-while ($row = $query->fetch_assoc()) {
-    array_push($predios, $row);
-}
-
-$connection->close();
 
 ?>
 

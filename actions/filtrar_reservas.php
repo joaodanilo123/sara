@@ -6,6 +6,7 @@ $ambiente_selecionado = isset($_GET['ambiente']) ? $_GET['ambiente'] : 'todos';
 $professor_selecionado = isset($_GET['prof']) ? $_GET['prof'] : 'todos';
 $agente_selecionado = isset($_GET['agente']) ? $_GET['agente'] : 'todos';
 
+
 function carregar_ambientes()
 {
     global $connection;
@@ -13,24 +14,18 @@ function carregar_ambientes()
     $sql = "SELECT ambiente_id, ambiente_nome FROM ambiente";
     return $connection->query($sql);
 }
-function carregar_professores()
-{
-    global $connection;
 
-    $sql = "SELECT usuario_id, usuario_nome FROM usuario WHERE hierarquia_nome='professor'";
-    return $connection->query($sql);
-}
-function carregar_agentes()
-{
+function carregar_usuarios(){
     global $connection;
-
-    $sql = "SELECT usuario_id, usuario_nome FROM usuario WHERE hierarquia_nome='agente'";
+    
+    $sql = "SELECT usuario_id, usuario_nome, hierarquia_nome FROM usuario WHERE hierarquia_nome != 'admin'";
     return $connection->query($sql);
 }
 
-$ambientes = carregar_ambientes();
-$profs = carregar_professores();
-$agentes = carregar_agentes();
+$ambientes = carregar_ambientes()->fetchAll();
+$usuarios = carregar_usuarios()->fetchAll();
+$agentes = array_filter($usuarios, fn($arr) => $arr['hierarquia_nome'] == 'agente');
+$profs = array_filter($usuarios, fn($arr) => $arr['hierarquia_nome'] == 'professor');
 
 ?>
 
@@ -45,13 +40,13 @@ $agentes = carregar_agentes();
                         <?php if ($ambiente_selecionado === 'todos'): ?>
                             <option selected value="todos">Todos</option>
                         <?php endif?>
-                        <?php while ($amb = $ambientes->fetch_assoc()): ?>
+                        <?php foreach($ambientes as $amb): ?>
                             <?php if ($amb['ambiente_id'] == $ambiente_selecionado): ?>
                                 <option selected value="<?=$amb['ambiente_id']?>"><?=$amb['ambiente_nome']?></option>
                             <?php else: ?>
                                 <option value="<?=$amb['ambiente_id']?>"><?=$amb['ambiente_nome']?></option>
                             <?php endif?>
-                        <?php endwhile?>
+                        <?php endforeach?>
                     </select>
                 </fieldset>
 
@@ -62,13 +57,13 @@ $agentes = carregar_agentes();
                         <?php if ($professor_selecionado === 'todos'): ?>
                             <option selected value="todos">Todos</option>
                         <?php endif?>
-                        <?php while ($prof = $profs->fetch_assoc()): ?>
+                        <?php foreach($profs as $prof): ?>
                             <?php if ($prof['usuario_id'] == $professor_selecionado): ?>
                                 <option selected value="<?=$prof['usuario_id']?>"><?=$prof['usuario_nome']?></option>
                             <?php else: ?>
                                 <option value="<?=$prof['usuario_id']?>"><?=$prof['usuario_nome']?></option>
                             <?php endif?>
-                        <?php endwhile?>
+                        <?php endforeach?>
                     </select>
                 </fieldset>
                 
@@ -78,13 +73,13 @@ $agentes = carregar_agentes();
                         <?php if ($agente_selecionado === 'todos'): ?>
                             <option selected value="todos">Todos</option>
                         <?php endif?>
-                        <?php while ($agente = $agentes->fetch_assoc()): ?>
+                        <?php foreach($agentes as $agente): ?>
                             <?php if ($agente['usuario_id'] == $agente_selecionado): ?>
                                 <option selected value="<?=$agente['usuario_id']?>"><?=$agente['usuario_nome']?></option>
                             <?php else: ?>
                                 <option value="<?=$agente['usuario_id']?>"><?=$agente['usuario_nome']?></option>
                             <?php endif?>
-                        <?php endwhile?>
+                        <?php endforeach?>
                     </select>
                 </fieldset>
                 

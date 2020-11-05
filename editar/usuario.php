@@ -3,15 +3,15 @@
 include '../config/conexao.php';
 
 $id = $_GET['usuario'];
-$dadosAtuais = $connection->query("SELECT * FROM usuario WHERE usuario_id='$id'")->fetch_assoc();
+$dadosAtuais = $connection->query("SELECT * FROM usuario WHERE usuario_id='$id'")->fetch();
 
 $query = $connection->query('SELECT * FROM hierarquia');
 $hierarquias = array();
-while ($row = $query->fetch_assoc()) {
+while ($row = $query->fetch()) {
     array_push($hierarquias, $row);
 }
 
-$connection->close();
+$connection = null;
 
 ?>
 

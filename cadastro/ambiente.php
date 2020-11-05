@@ -2,19 +2,20 @@
 
 include '../config/conexao.php';
 
-$query = $connection->query('SELECT * FROM tipo_ambiente');
-$tipos_ambiente = array();
-while ($row = $query->fetch_assoc()) {
-    array_push($tipos_ambiente, $row);
-}
+try {
+    
+    $sql = 'SELECT tipo, tipo_ambiente_nome FROM tipo_ambiente';
+    $tipos_ambiente = $connection->query($sql)->fetchAll();
 
-$query = $connection->query('SELECT * FROM predio');
-$predios = array();
-while ($row = $query->fetch_assoc()) {
-    array_push($predios, $row);
-}
+    $sql = 'SELECT predio_id, predio_nome FROM predio';
+    $predios = $connection->query($sql)->fetchAll();
 
-$connection->close();
+    $connection = null;
+
+} catch (PDOException $e) {
+    echo $e->getMessage();
+    exit();
+}
 
 ?>
 

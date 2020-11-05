@@ -5,7 +5,6 @@ session_start();
 require '../utils/verificarSessao.php';
 require '../utils/buildUrl.php';
 
-
 $valid_request = true;
 
 if ($valid_request) {
@@ -23,22 +22,36 @@ if ($valid_request) {
 
     $sql = "INSERT INTO reserva(reserva_id, ambiente_id, reservista_id, reserva_inicio, reserva_fim, reserva_cor, reserva_ativa, reserva_descricao) VALUES
         (
-            '$id', 
-            '$amb',
-            '$prof',
-            '$i',
-            '$f',
-            '$cor',
+            :id, 
+            :amb,
+            :prof,
+            :i,
+            :f,
+            :cor,
             '0',
-            '$descricao'
+            :dsc
         )
     ";
 
-    if ($connection->query($sql)) {
+    try {
+        
+        $query = $connection->prepare($sql);
+        $query->bindParam(':id', $id);
+        $query->bindParam(':amb', $amb);
+        $query->bindParam(':prof', $prof);
+        $query->bindParam(':i', $i);
+        $query->bindParam(':f', $f);
+        $query->bindParam(':cor', $cor);
+        $query->bindParam(':dsc', $descricao);
+
+        $query->execute();
+        
         header("Location: ../painel/professor.php?page=reserva&ambiente=$amb");
-    } else {
-        echo $connection->error;
-    };
+    
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+        exit();
+    }
 } else {
     header('Location: ../painel/professor.php?invalid_params=1');
 }

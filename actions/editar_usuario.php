@@ -50,21 +50,21 @@ function buildSql()
     global $nome, $token, $id, $hierarquia, $email;
 
     $sql = "UPDATE usuario SET 
-            usuario_nome='$nome',
-            usuario_email='$email',
-            hierarquia_nome='$hierarquia'
+            usuario_nome=:nome,
+            usuario_email=:email,
+            hierarquia_nome=:hrq
             ";
 
     if ($hierarquia == 'professor') {
-        $sql .= ",usuario_token='$token'";
+        $sql .= ",usuario_token=:tkn";
     }
 
     if (!empty($senha)) {
         $senha = md5($senha);
-        $sql .= ",usuario_senha='$senha'";
+        $sql .= ",usuario_senha=:senha";
     }
 
-    $sql .= " WHERE usuario_id='$id'";
+    $sql .= " WHERE usuario_id=:id";
 
     return $sql;
 }
@@ -72,14 +72,22 @@ function buildSql()
 function executeUpdate($sql)
 {
     global $messages;
-
+    global $nome, $token, $id, $hierarquia, $email;
     require '../config/conexao.php';
 
-    if ($connection->query($sql)) {
+    $query = $connection->prepare($sql);
+
+    $query->bindParam(':nome', $nome);
+    $query->bindParam(':tkn', $token);
+    $query->bindParam(':email', $email);
+    $query->bindParam(':id', $id);
+    $query->bindParam(':hrq', $hierarquia);
+
+    if ($query->execute()) {
         array_push($messages, 'Dados atualizados com sucesso');
     } else {
         array_push($messages, "Não foi possível atualizar os dados: {$connection->error}");
     };
 
-    $connection->close();
+    $connection = null;
 }

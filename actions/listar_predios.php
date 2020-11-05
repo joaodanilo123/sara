@@ -2,8 +2,8 @@
 include '../config/conexao.php';
 
 $sql = "SELECT * FROM predio";
-$result = $connection->query($sql);
-$connection->close();
+$result = $connection->query($sql)->fetchAll();
+$connection = null;
 
 ?>
 <div class="table-responsive">
@@ -13,7 +13,7 @@ $connection->close();
             <td><b>Nome</b></td>
             <td style="width: 10%;"><b>Opções</b></td>
         </tr>
-        <?php while ($row = $result->fetch_assoc()) : ?>
+        <?php foreach($result as $row) : ?>
             <tr>
                 <td><?= $row['predio_id'] ?></td>
                 <td><?= $row['predio_nome'] ?></td>
@@ -22,6 +22,6 @@ $connection->close();
                     <a href="#" title="Ver ambientes" onclick="loadBuildingEnvs('<?= $row['predio_id'] ?>')" class="opcao">🔍</a>
                 </td>
             </tr>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
     </table>
 </div>

@@ -4,13 +4,14 @@ require '../config/conexao.php';
 
 $ambiente = $_GET['ambiente'];
 
-$sql = "SELECT reserva_inicio, reserva_fim FROM reserva WHERE ambiente_id = '$ambiente'";
-$result = $connection->query($sql);
+$sql = "SELECT reserva_inicio, reserva_fim FROM reserva WHERE ambiente_id = ?";
+$query = $connection->prepare($sql);
+$query->execute([$ambiente]);
+$result = $query->fetchAll();
 $stamps = [];
 
-while($row = $result->fetch_assoc()) {
+foreach($result as $row) {
     array_push($stamps, [$row['reserva_inicio'], $row['reserva_fim']]);
 }
-
 
 echo json_encode($stamps);

@@ -2,11 +2,18 @@
 
 require "../config/conexao.php";
 
-
 $user = $_GET['id'];
 
-$sql = "SELECT * FROM usuario WHERE usuario_id = '$user'";
-$data = $connection->query($sql)->fetch_assoc();
+$query = $connection->prepare("SELECT * FROM usuario WHERE usuario_id = :user");
+$query->bindParam(':user', $user);
+$query->execute();
+
+if($query->rowCount() <= 0){
+    $connection = null;
+    exit();
+}
+
+$data = $query->fetch();
 
 ?>
 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

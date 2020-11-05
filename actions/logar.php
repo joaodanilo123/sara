@@ -16,8 +16,9 @@ if (isset($submit_button)) {
     $result = $query->fetch();
     
     if ($query->rowCount() <= 0) {
-        header('Location: ../login.php');;
-        die("erro");
+        header('Location: ../login.php?erro=1');
+        $connection = null;
+        exit();
     } else {
 
         session_start();
@@ -25,6 +26,8 @@ if (isset($submit_button)) {
         $_SESSION['id'] = $result['usuario_id'];
         $_SESSION['nome'] = $result['usuario_nome'];
         $_SESSION['hierarquia'] = $result['hierarquia_nome'];
+
+        $connection = null;
 
         switch ($result['hierarquia_nome']) {
             case 'admin':

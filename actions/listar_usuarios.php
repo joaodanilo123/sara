@@ -2,8 +2,8 @@
 include '../config/conexao.php';
 
 $sql = "SELECT * FROM usuario";
-$result = $connection->query($sql);
-$connection->close();
+$usuarios = $connection->query($sql)->fetchAll();
+$connection = null;
 
 ?>
 
@@ -17,7 +17,7 @@ $connection->close();
             <td style="width: 10%;"><b>Opções</b></>
         </tr>
 
-        <?php while ($row = $result->fetch_assoc()) : ?>
+        <?php foreach ($usuarios as $row) : ?>
             <tr>
                 <td><?= $row['usuario_id'] ?></td>
                 <td><?= $row['usuario_nome'] ?></td>
@@ -32,6 +32,6 @@ $connection->close();
                     <?php endif ?>
                 </td>
             </tr>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
     </table>
 </div>

@@ -3,32 +3,19 @@
 session_start();
 require '../config/conexao.php';
 
-function carregar_profs(mysqli $conn)
-{
+try {
+    
     $sql = "SELECT usuario_nome, usuario_id FROM usuario WHERE hierarquia_nome='professor'";
-    $query = $conn->query($sql);
-    $result = array();
-    while ($row = $query->fetch_assoc()) {
-        array_push($result, $row);
-    }
+    $pd = $connection->query($sql)->fetchAll();
 
-    return $result;
-}
-
-function carregar_ambientes(mysqli $conn)
-{
     $sql = "SELECT ambiente_nome, ambiente_id FROM ambiente WHERE ambiente_ativo='sim'";
-    $query = $conn->query($sql);
-    $result = array();
-    while ($row = $query->fetch_assoc()) {
-        array_push($result, $row);
-    }
+    $ad = $connection->query($sql)->fetchAll();
 
-    return $result;
+} catch (PDOException $e) {
+    echo $e->getMessage();
+    exit();
 }
 
-$ad = carregar_ambientes($connection);
-$pd = carregar_profs($connection);
 ?>
 <form action="../actions/reservar.php" method="post">
     <select name="ambiente" id="ambiente" onchange="loadReserveFormCalendar()">
@@ -66,6 +53,10 @@ $pd = carregar_profs($connection);
                             <input type="datetime-local" name="fim" id="fim">
                         </fieldset>
                     </section>
+                    <fieldset class="form-group">
+                        <label for="descricao">Descrição:</label>
+                        <textarea name="descricao" id="descricao" cols="30" rows="10" class="form-control"></textarea>
+                    </fieldset>
                     <fieldset class="form-row">
                         <label for="color">Cor de exibição no calendário</label>
                         <select name="color" class="form-control" id="color">

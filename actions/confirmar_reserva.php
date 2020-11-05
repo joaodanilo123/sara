@@ -8,11 +8,18 @@ require '../config/conexao.php';
 $reserva_id = $_POST['id'];
 $agente = $_SESSION['id'];
 $dados = [];
-$updateSql = "UPDATE reserva SET reserva_ativa='1', agente_id='$agente' WHERE reserva_id='$reserva_id'";
-$searchSql = "SELECT reserva_cor FROM reserva WHERE reserva_id='$reserva_id'";
+$updateSql = "UPDATE reserva SET reserva_ativa='1', agente_id= :agt WHERE reserva_id= :rsv";
+$searchSql = "SELECT reserva_cor FROM reserva WHERE reserva_id= ? ";
 
-if ($connection->query($updateSql)) {
-    $cor = $connection->query($searchSql)->fetch_assoc()['reserva_cor'];
+$query = $connection->prepare($updateSql);
+$query->bindParam(':agt', $agente);
+$query->bindParam(':rsv', $reserva_id);
+
+$searchQuery = $connection->prepare($searchSql);
+$searchQuery->execute();
+
+if ($query->execute()) {
+    $cor = $searchQuery->fetch()['reserva_cor'];
     $dados['color'] = $cor;
     $dados['ok'] = 1;
     $dados['id'] = $reserva_id;
@@ -25,4 +32,4 @@ if ($connection->query($updateSql)) {
 
 echo json_encode($dados);
 
-$connection->close();
+$connection = null;
