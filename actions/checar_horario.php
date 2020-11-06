@@ -2,16 +2,36 @@
 
 require '../config/conexao.php';
 
-$ambiente = $_GET['ambiente'];
+//$predio = $_GET['predio'];
 
-$sql = "SELECT reserva_inicio, reserva_fim FROM reserva WHERE ambiente_id = ?";
-$query = $connection->prepare($sql);
-$query->execute([$ambiente]);
-$result = $query->fetchAll();
-$stamps = [];
+$sql = "SELECT * FROM predio p
+        INNER JOIN ambiente a ON p.predio_id = a.predio_id  
+        INNER JOIN reserva r ON r.ambiente_id = a.ambiente_id
+        INNER JOIN usuario u ON u.usuario_id = r.reservista_id
+        WHERE r.reserva_ativa = 1";
 
-foreach($result as $row) {
-    array_push($stamps, [$row['reserva_inicio'], $row['reserva_fim']]);
+$dataRaw = $connection->query($sql)->fetchAll();
+$data = [];
+
+foreach($dataRaw as $d){
+
+    $reserveDate = date('d/m/Y' , strtotime($d['reserva_inicio']));
+    $today = date('d/m/Y');
+
+    if($today == $reserveDate){
+
+        $reserveHourStart = date('H:i' , strtotime($d['reserva_inicio']));
+        $reserveHourEnd = date('H:i' , strtotime($d['reserva_fim']));
+
+        $data[] = [
+            'professor' => $d['usuario_nome'],
+            'sala' => $d['ambiente_nome'],
+            'predio' => $d['predio_nome'],
+            'descricao' => $d['reserva_descricao'],
+            'inicio' => $reserveHourStart,
+            'fim' => $reserveHourEnd,
+        ];
+    }
 }
 
-echo json_encode($stamps);
+echo json_encode($data);
