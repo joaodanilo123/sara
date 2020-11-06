@@ -6,6 +6,7 @@ function loadReserveForm(_ambiente = false) {
             document.getElementById('content-name').innerText = '📅 Nova reserva';
             if (_ambiente){
                 loadReserveFormCalendar(_ambiente)
+                document.getElementById('ambiente').value = _ambiente
             }
         }
     }
