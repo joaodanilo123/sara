@@ -65,6 +65,12 @@ $messages = isset($_GET['messages']) ? $_GET['messages'] : [];
                     <span>Buscar reservas</span>
                 </a>
             </li>
+            <li class='nav-item'>
+                <a class='nav-link' onclick="loadRFIDForm()">
+                    <i class='fas fa-fw'>🔎</i>
+                    <span>Passar etiqueta</span>
+                </a>
+            </li>
         </ul>
 
         <div id='content-wrapper'>
@@ -100,14 +106,13 @@ $messages = isset($_GET['messages']) ? $_GET['messages'] : [];
     <script src='../dependencias/vendor/jquery-easing/jquery.easing.min.js'></script>
 
 
-    <script src='../dependencias/vendor/chart.js/Chart.min.js'></script>
+    
     <script src='../dependencias/vendor/datatables/jquery.dataTables.js'></script>
     <script src='../dependencias/vendor/datatables/dataTables.bootstrap4.js'></script>
 
 
     <script src='../dependencias/js/sb-admin.min.js'></script>
-    <script src='../dependencias/js/demo/chart-area-demo.js'></script>
-
+    
     <script src="../dependencias/axios.min.js"></script>
     <script src="../assets/panel_common.js"></script>
     <script src="../assets/panel_agente.js"></script>
