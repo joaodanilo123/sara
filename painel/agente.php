@@ -30,10 +30,10 @@ $messages = isset($_GET['messages']) ? $_GET['messages'] : [];
 
 <body id="page-top">
     <nav class='navbar navbar-expand navbar-dark bg-dark static-top'>
-        <a class='navbar-brand mr-1' href='#'>📠<?= $_SESSION['nome'] ?></a>
+        <a class='navbar-brand mr-1' href='#'>📠 <?= $_SESSION['nome'] ?></a>
         <button class='btn btn-link btn-sm text-white order-1 order-sm-0' id='sidebarToggle' href='#'>
             <i class='fas fa-bars'></i>
-        </button>
+        </button>   
 
         <ul class='navbar-nav ml-auto ml-md-0'>
             <li class='nav-item dropdown no-arrow'>
@@ -63,12 +63,6 @@ $messages = isset($_GET['messages']) ? $_GET['messages'] : [];
                 <a class='nav-link' onclick="loadSearch()">
                     <i class='fas fa-fw'>🔎</i>
                     <span>Buscar reservas</span>
-                </a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' onclick="loadRFIDForm()">
-                    <i class='fas fa-fw'>🔎</i>
-                    <span>Passar etiqueta</span>
                 </a>
             </li>
         </ul>

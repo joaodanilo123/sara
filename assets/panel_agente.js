@@ -17,12 +17,6 @@ function loadReserveForm(_ambiente = false) {
 
 var storedEnv;
 
-async function loadRFIDForm(){
-    requestContent(`/actions/ponto.php`).then( content => {
-        changeContent(content, 'Passe de RFID');
-    })
-}
-
 async function loadReserveFormCalendar(_ambiente = false) {
 
     var ambiente = _ambiente || document.getElementById('ambiente').value
@@ -133,8 +127,3 @@ async function confirmReserve(reserve_id){
     return response.data;
 }
 
-async function callRFID(e){
-    e.preventDefault();
-    const tag = document.getElementById('rfid').value
-    console.log(tag);
-}

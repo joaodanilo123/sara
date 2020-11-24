@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/ponto.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <title>Ponto</title>
+</head>
+
+<body>
+    <form onsubmit="callRFID(event)">
+        <h1>Passagem de RFID</h1>
+
+        <fieldset class="field">
+            <input type="text" name="rfid" id="rfid" class="input" required>
+            <button type="submit" class="btn-primary">Verificar</button>
+        </fieldset>
+    </form>
+</body>
+
+
+<script src="./assets/panel_common.js"></script>
+<script>
+
+    async function callRFID(e) {
+        e.preventDefault();
+        const tag = document.getElementById('rfid').value
+        try {
+            const response = await AXIOS_INSTANCE.post('/actions/atualizar_reserva.php', `rfid=${tag}`);
+            alert(response.data);
+        } catch (err) {
+            alert(err.response.data);
+        }
+    }
+
+</script>
+
+</html>
