@@ -12,14 +12,13 @@ $sql = "SELECT reserva_finalizada, reserva_iniciada, reserva_id FROM reserva
 try {
     $data = $connection->query($sql)->fetch();
 } catch (PDOException $e) {
-    echo $e->getMessage();
+    echo jsonn_encode(['message' => $e->getMessage()]);
     http_response_code(500);
     exit();
 }
 
 if(!$data){
-    http_response_code(500);
-    echo "ERRO: Usuário não encontrado ou sem reservas pendentes";
+    echo json_encode(['message' => 'Usuário não encontrado ou sem reservas pendentes']);
     exit();
 }
 
@@ -34,16 +33,15 @@ if($data['reserva_iniciada'] == null) {
     $message = 'reserva finalizada';
 } else {
     $connection = null;
-    http_response_code(500);
     echo 'ERRO na atualização do status da reserva.';
     exit();
 }
 
 try {
     $connection->query($sql);
-    echo $message;
+    echo json_encode(['message' => $message]);
 } catch (PDOException $e) {
     http_response_code(500);
-    echo 'ERRO no banco de dados: '.$e->getMessage();
+    echo  json_encode(['message' => 'ERRO no banco de dados: '.$e->getMessage()]);
     exit();
 }

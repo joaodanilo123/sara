@@ -23,6 +23,19 @@ foreach($dataRaw as $d){
         $reserveHourStart = date('H:i' , strtotime($d['reserva_inicio']));
         $reserveHourEnd = date('H:i' , strtotime($d['reserva_fim']));
 
+        if ($d['reserva_iniciada'] != null) {
+            $reserveHourStarted = date('H:i' , strtotime($d['reserva_iniciada']));
+        } else {
+            $reserveHourStarted = false;
+        }
+
+        if ($d['reserva_finalizada'] != null) {
+            $reserveHourEnded = date
+            ('H:i' , strtotime($d['reserva_finalizada']));
+        } else {
+            $reserveHourEnded = false;
+        }
+
         $data[] = [
             'professor' => $d['usuario_nome'],
             'sala' => $d['ambiente_nome'],
@@ -30,6 +43,8 @@ foreach($dataRaw as $d){
             'descricao' => $d['reserva_descricao'],
             'inicio' => $reserveHourStart,
             'fim' => $reserveHourEnd,
+            'iniciada' => $reserveHourStarted,
+            'finalizada' => $reserveHourEnded
         ];
     }
 }

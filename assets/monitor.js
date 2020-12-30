@@ -39,6 +39,15 @@ async function render(data, room) {
     data.forEach(element => {
         if (element.sala == room) {
             let html = '<tr>';
+
+            if (element.iniciada) {
+                html = '<tr style="background-color: blue">'
+            }
+
+            if (element.finalizada) {
+                html = '<tr style="background-color: red">'
+            }
+
             html += `<td>${element.professor}</td>`;
             html += `<td>${element.descricao}</td>`;
             html += `<td>${element.inicio}</td>`;
