@@ -8,7 +8,7 @@ require '../config/conexao.php';
 $reserva_id = $_POST['id'];
 $agente = $_SESSION['id'];
 $dados = [];
-$updateSql = "UPDATE reserva SET reserva_ativa='1', agente_id= :agt WHERE reserva_id= :rsv";
+$updateSql = "UPDATE reserva SET reserva_ativa=1, agente_id= :agt WHERE reserva_id= :rsv";
 $searchSql = "SELECT reserva_cor FROM reserva WHERE reserva_id= ? ";
 
 $query = $connection->prepare($updateSql);
@@ -16,7 +16,7 @@ $query->bindParam(':agt', $agente);
 $query->bindParam(':rsv', $reserva_id);
 
 $searchQuery = $connection->prepare($searchSql);
-$searchQuery->execute();
+$searchQuery->execute([$reserva_id]);
 
 if ($query->execute()) {
     $cor = $searchQuery->fetch()['reserva_cor'];
