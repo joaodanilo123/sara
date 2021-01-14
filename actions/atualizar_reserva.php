@@ -4,15 +4,20 @@ require '../config/conexao.php';
 
 $rfid = $_POST['rfid'];
 
+$today_0 = date('Y-m-d 00:00:00');
+$today_24 = date('Y-m-d 23:00:00');
+
+
 $sql = "SELECT reserva_finalizada, reserva_iniciada, reserva_id FROM reserva 
         INNER JOIN usuario ON reserva.reservista_id = usuario.usuario_id 
-        WHERE usuario.usuario_token = '$rfid' AND reserva_ativa = 1 AND reserva_finalizada IS NULL   
+        WHERE usuario.usuario_token = '$rfid' AND reserva_ativa = 1 AND reserva_finalizada IS NULL 
+        AND reserva_inicio BETWEEN '$today_0' AND '$today_24'
         ORDER BY reserva_inicio LIMIT 1 ";
 
 try {
     $data = $connection->query($sql)->fetch();
 } catch (PDOException $e) {
-    echo jsonn_encode(['message' => $e->getMessage()]);
+    echo json_encode(['message' => $e->getMessage()]);
     http_response_code(500);
     exit();
 }
